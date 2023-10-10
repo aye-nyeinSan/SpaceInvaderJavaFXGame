@@ -18,7 +18,8 @@ public class SpaceInvaderApp extends Application {
 
     private double t = 0;
 
-    private Sprite player = new Sprite(300, 750, 40, 40, "player", Color.BLUE);
+    //creating player
+    private Sprite player = new Sprite(300, 750, 40, 40, "player", Color.YELLOW);
 
     private Parent createContent(){
         root.setPrefSize(600,800);
@@ -41,7 +42,7 @@ public class SpaceInvaderApp extends Application {
 
     private void nextLevel() {
         for (int i = 0; i < 5; i++) {
-            Sprite s = new Sprite(90 + i*100, 150, 30,30,"enemy", Color.RED);
+            Sprite s = new Sprite(90 + i*100, 150, 30,30,"enemy", Color.DARKRED);
             root.getChildren().add(s);
         }
     }
