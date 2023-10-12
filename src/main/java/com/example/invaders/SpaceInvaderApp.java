@@ -47,8 +47,6 @@ public class SpaceInvaderApp extends Application {
             playerController playerController = new playerController(player);
             enemyController enemyController = new enemyController(enemies);
 
-
-
             Scene scene = new Scene(root);
             scene.setOnKeyPressed(e -> {
                 switch (e.getCode()) {
