@@ -4,12 +4,18 @@ import com.example.invaders.SpaceInvaderApp;
 import com.example.invaders.model.Bullet;
 import com.example.invaders.model.Player;
 import com.example.invaders.model.Sprite;
-import static com.example.invaders.controller.SpriteController.sprites;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class playerController {
     static Player player ;
     boolean isMoveLeft= false;
     boolean isMoveRight= false;
+   public static long lastPlayerShotTime = 0;
+    public static final long PLAYER_SHOOT_COOLDOWN = 500_000_000; // 0.5 seconds (adjust as needed)
+
 
     public playerController(Player player) {
      this.player = player;
@@ -39,27 +45,7 @@ public class playerController {
         return player;
     }
 
-    public void update() {
 
-        sprites().forEach(s -> {
-            switch (s.type){
-                case "playerbullet":
-                      s.moveUp();
-        sprites().stream().filter(e->e.type.equals("enemy")).forEach(enemy->{
-            if(s.getBoundsInParent().intersects(enemy.getBoundsInParent()))
-            {
-                enemy.dead = true;
-                s.dead = true;
-            }
-        });
-        }
-    });
-        SpaceInvaderApp.getRoot().getChildren().removeIf(n -> {
-            Sprite s = (Sprite) n;
-            return s.dead;
-        });
-
-    }
     public void checkCollision() {
         if (player.getTranslateX()>= 560)
         {
@@ -75,5 +61,9 @@ public class playerController {
 
     public void shoot() {
         Bullet.shoot(player);
+    }
+
+    public void shootSpecial() {
+        Bullet.shootSpecial(player);
     }
 }

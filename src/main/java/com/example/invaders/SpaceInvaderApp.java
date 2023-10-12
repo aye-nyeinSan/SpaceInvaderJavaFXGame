@@ -21,10 +21,15 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class SpaceInvaderApp extends Application {
   public static Pane root = new Pane();
+    public static List<Sprite> sprites() {
+
+        return root.getChildren().stream().map(n -> (Sprite) n).collect(Collectors.toList());
+    }
         @Override
         public void start(Stage stage) throws Exception {
 
@@ -56,14 +61,18 @@ public class SpaceInvaderApp extends Application {
                     case SPACE:
                         playerController.shoot();
                         break;
+                    case S:
+                        playerController.shootSpecial();
                 }
             });
+
+
 
             AnimationTimer timer = new AnimationTimer() {
                 @Override
                 public void handle(long l) {
-                    playerController.update();
-                    enemyController.update();
+                   SpriteController.update();
+
                     enemyController.moveEnemies(enemies);
                     playerController.checkCollision();
                     enemyController.checkCollisions();
