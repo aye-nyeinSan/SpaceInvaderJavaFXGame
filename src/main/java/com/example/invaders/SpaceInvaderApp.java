@@ -1,9 +1,13 @@
 package com.example.invaders;
 
+import com.example.model.Sprite;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -16,15 +20,41 @@ public class SpaceInvaderApp extends Application {
 
     private Pane root = new Pane();
 
+
     private double t = 0;
+    //player images
+    private Image playerImage=new Image("C:\\Users\\DELL\\Desktop\\SpaceInvader\\src\\main\\resources\\com\\example\\assets\\player.png");
+
+    //enemy images
+    private Image enemyImage=new Image("C:\\Users\\DELL\\Desktop\\SpaceInvader\\src\\main\\resources\\com\\example\\assets\\alien.png");
+    private Image enemyImage2=new Image("C:\\Users\\DELL\\Desktop\\SpaceInvader\\src\\main\\resources\\com\\example\\assets\\alien2.png");
+    private Image enemyImage3=new Image("C:\\Users\\DELL\\Desktop\\SpaceInvader\\src\\main\\resources\\com\\example\\assets\\alien3.png");
+
+    //bullet images
+    private Image bulletImage=new Image("C:\\Users\\DELL\\Desktop\\SpaceInvader\\src\\main\\resources\\com\\example\\assets\\bomb.png");
+
+    //explosion images
+    private Image explosion_img=new Image("C:\\Users\\DELL\\Desktop\\SpaceInvader\\src\\main\\resources\\com\\example\\assets\\explosion.png");
+    static final int explosion_W=128;
+    static final int explosion_rows=3;
+    static final int explosion_col=3;
+    static final int explosion_h=128;
+    static final int explosion_steps=15;
+
+    private Sprite explosion=new Sprite(0,0,explosion_img,"explosion");
+
 
     //creating player
-    private Sprite player = new Sprite(300, 750, 40, 40, "player", Color.YELLOW);
+    private Sprite player = new Sprite(300, 600,playerImage, "player");
+
 
     private Parent createContent(){
-        root.setPrefSize(600,800);
+        root.setPrefSize(600,700);
+        explosion.visibleProperty().set(false);
 
         root.getChildren().add(player);
+        root.getChildren().add(explosion);
+
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -42,8 +72,12 @@ public class SpaceInvaderApp extends Application {
 
     private void nextLevel() {
         for (int i = 0; i < 5; i++) {
-            Sprite s = new Sprite(90 + i*100, 150, 30,30,"enemy", Color.DARKRED);
+            Sprite s = new Sprite(90 + i*100, 150,enemyImage,"enemy");
+            Sprite s2= new Sprite(90 + i*100,200, enemyImage2,"enemy");
+            Sprite s3= new Sprite(90 + i*100,250, enemyImage3,"enemy");
             root.getChildren().add(s);
+            root.getChildren().add(s2);
+            root.getChildren().add(s3);
         }
     }
 
@@ -60,6 +94,7 @@ public class SpaceInvaderApp extends Application {
                     if(s.getBoundsInParent().intersects(player.getBoundsInParent())){
                         player.dead = true;
                         s.dead = true;
+                        showExplosion(player);
                     }
                     break;
                 case "playerbullet":
@@ -68,6 +103,7 @@ public class SpaceInvaderApp extends Application {
                         if(s.getBoundsInParent().intersects(enemy.getBoundsInParent())){
                             enemy.dead = true;
                             s.dead = true;
+                            showExplosion(enemy);
                         }
                     });
                     break;
@@ -76,6 +112,7 @@ public class SpaceInvaderApp extends Application {
                         if(Math.random()<0.3){
                             shoot(s);
                         }
+
                     }
                     break;
 
@@ -91,11 +128,18 @@ public class SpaceInvaderApp extends Application {
         }
     }
 
+    private void showExplosion(Sprite target) {
+        explosion.setTranslateX(target.getTranslateX());
+        explosion.setTranslateY(target.getTranslateY());
+        explosion.visibleProperty().set(true);
+    }
+
     private void shoot(Sprite who){
-        Sprite s = new Sprite((int)who.getTranslateX() + 20, (int)who.getTranslateY(), 5,20, who.type + "bullet", Color.BLACK);
+        Sprite s = new Sprite((int)who.getTranslateX() + 20, (int)who.getTranslateY(), bulletImage,who.type+"bullet");
         root.getChildren().add(s);
 
     }
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -120,36 +164,9 @@ public class SpaceInvaderApp extends Application {
 
     }
 
-    private static class Sprite extends Rectangle {
-        boolean dead = false;
-        final String type;
-
-        Sprite(int x, int y, int w, int h, String type, Color color){
-            super(w,h,color);
-
-            this.type = type;
-            setTranslateX(x);
-            setTranslateY(y);
-        }
-
-        void moveLeft(){
-            setTranslateX(getTranslateX() - 5);
-        }
-
-        void moveRight(){
-            setTranslateX(getTranslateX() + 5);
-        }
-
-        void moveUp(){
-            setTranslateY(getTranslateY() - 5);
-        }
-
-        void moveDown(){
-            setTranslateY(getTranslateY() + 5);
-        }
-    }
 
     public static void main(String[] args) {
+        System.out.println();
         launch(args);
     }
 }
