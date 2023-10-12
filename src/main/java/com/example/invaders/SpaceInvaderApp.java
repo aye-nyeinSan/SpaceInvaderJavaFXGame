@@ -2,6 +2,8 @@ package com.example.invaders;
 
 import com.example.model.Sprite;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,13 +37,7 @@ public class SpaceInvaderApp extends Application {
     private Image bulletImage=new Image("C:\\Users\\DELL\\Desktop\\SpaceInvader\\src\\main\\resources\\com\\example\\assets\\bomb.png");
 
     //explosion images
-    private Image explosion_img=new Image("C:\\Users\\DELL\\Desktop\\SpaceInvader\\src\\main\\resources\\com\\example\\assets\\explosion.png");
-    static final int explosion_W=128;
-    static final int explosion_rows=3;
-    static final int explosion_col=3;
-    static final int explosion_h=128;
-    static final int explosion_steps=15;
-
+    private Image explosion_img=new Image("C:\\Users\\DELL\\Desktop\\SpaceInvader\\src\\main\\resources\\com\\example\\assets\\explo1.png");
     private Sprite explosion=new Sprite(0,0,explosion_img,"explosion");
 
 
@@ -129,9 +126,21 @@ public class SpaceInvaderApp extends Application {
     }
 
     private void showExplosion(Sprite target) {
-        explosion.setTranslateX(target.getTranslateX());
-        explosion.setTranslateY(target.getTranslateY());
+        explosion.setTranslateX(target.getTranslateX()-100);
+        explosion.setTranslateY(target.getTranslateY()-100);
         explosion.visibleProperty().set(true);
+
+        int explosionDuration = 500; // Adjust the duration as needed
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(
+                        Duration.millis(explosionDuration),
+                        event -> explosion.visibleProperty().set(false)
+                )
+        );
+
+        timeline.setCycleCount(1); // Play the animation once
+        timeline.play();
     }
 
     private void shoot(Sprite who){
