@@ -34,7 +34,6 @@ public class Bullet extends Sprite {
         int yOffset = 0; // Adjust this value for the Y offset if needed
 
         if (who.type.equals("player") && currentTime - lastPlayerShotTime >= PLAYER_SHOOT_COOLDOWN) {
-
             Bullet bullet2 = new Bullet((int) who.getTranslateX() + xOffset, (int) who.getTranslateY() + yOffset, 5, 5, who.type + "specialBullet", Color.RED);
             SpaceInvaderApp.getRoot().getChildren().addAll(bullet2);
             lastPlayerShotTime = currentTime;

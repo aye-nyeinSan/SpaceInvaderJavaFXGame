@@ -1,22 +1,23 @@
 package com.example.invaders;
 
-import com.example.invaders.controller.ScoreController;
+
 import com.example.invaders.controller.SpriteController;
 import com.example.invaders.controller.enemyController;
 import com.example.invaders.controller.playerController;
 import com.example.invaders.model.Enemy;
 import com.example.invaders.model.Player;
-import com.example.invaders.model.Score;
 import com.example.invaders.model.Sprite;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 
-import javafx.scene.Node;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -46,10 +47,19 @@ public class SpaceInvaderApp extends Application {
             root.getChildren().add(player);
             playerController playerController = new playerController(player);
             enemyController enemyController = new enemyController(enemies);
+            Pane overlay = new Pane();
+            VBox scoreBoard = new VBox();
+            scoreBoard.setAlignment(Pos.CENTER);
+
+            Label scoreLabel = new Label("Score: " + player.getScore());
+            scoreBoard.getChildren().add(scoreLabel);
+
+            overlay.getChildren().add(scoreBoard);
+            StackPane stackPane = new StackPane();
+            stackPane.getChildren().addAll(root, overlay);
 
 
-
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(stackPane);
             scene.setOnKeyPressed(e -> {
                 switch (e.getCode()) {
                     case LEFT:
@@ -75,7 +85,8 @@ public class SpaceInvaderApp extends Application {
 
                     enemyController.moveEnemies(enemies);
                     playerController.checkCollision();
-                    enemyController.checkCollisions();
+                    scoreLabel.setText("Score: " + player.getScore());
+
 
                 }
             };

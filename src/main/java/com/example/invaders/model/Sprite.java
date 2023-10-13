@@ -32,6 +32,18 @@ public class Sprite extends Rectangle {
     public void moveDown(){
         setTranslateY(getTranslateY() + 5);
     }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public String getType() {
+        return type;
+    }
 }
 
 
