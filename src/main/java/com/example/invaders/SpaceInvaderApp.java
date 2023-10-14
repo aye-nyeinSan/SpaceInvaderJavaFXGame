@@ -19,14 +19,19 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
+
+
 public class SpaceInvaderApp extends Application {
   public static Pane root = new Pane();
+  Logger logger = LogManager.getLogger(SpaceInvaderApp.class);
     public static List<Sprite> sprites() {
 
         return root.getChildren().stream().map(n -> (Sprite) n).collect(Collectors.toList());
@@ -64,15 +69,19 @@ public class SpaceInvaderApp extends Application {
                 switch (e.getCode()) {
                     case LEFT:
                         playerController.moveLeft();
+                        logger.debug("User is clicking LEFT key ");
                         break;
                     case RIGHT:
                         playerController.moveRight();
+                        logger.debug("User is clicking Right key ");
                         break;
                     case SPACE:
                         playerController.shoot();
+                        logger.debug("User is clicking Space key ");
                         break;
-                    case S:
+                    case C:
                         playerController.shootSpecial();
+                        logger.debug("User is clicking C key ");
                 }
             });
 
@@ -90,14 +99,16 @@ public class SpaceInvaderApp extends Application {
 
                 }
             };
-
+            logger.debug("Animation is working!");
             timer.start();
+            logger.error("App can not start.");
 
 
             // Set up the game scene and input handling
 
             stage.setScene(scene);
             stage.show();
+
         }
 
     public static  Pane getRoot() {

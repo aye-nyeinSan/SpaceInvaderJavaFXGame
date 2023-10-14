@@ -4,6 +4,8 @@ import com.example.invaders.SpaceInvaderApp;
 import com.example.invaders.model.Bullet;
 import com.example.invaders.model.Enemy;
 import com.example.invaders.model.Sprite;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +14,7 @@ import static com.example.invaders.controller.playerController.player;
 
 public class enemyController {
     private List<Enemy> enemies;
+    Logger logger = LogManager.getLogger(enemyController.class);
 
     public enemyController(List<Enemy> enemies) {
         this.enemies = enemies;
@@ -48,7 +51,7 @@ public class enemyController {
                 newX = currentEnemy.getTranslateX() + enemySpeed * direction;
                 currentEnemy.setTranslateX(newX+10);
 
-
+                    logger.debug("Enemy ship is moving!");
             }
         }
     }

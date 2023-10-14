@@ -5,6 +5,8 @@ import com.example.invaders.model.Bullet;
 import com.example.invaders.model.Player;
 import com.example.invaders.model.Sprite;
 import javafx.scene.paint.Color;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Timer;
@@ -21,7 +23,7 @@ public class playerController {
     static boolean isMoveRight= false;
    public static long lastPlayerShotTime = 0;
     public static final long PLAYER_SHOOT_COOLDOWN = 500_000_000; // 0.5 seconds (adjust as needed)
-
+    static Logger logger = LogManager.getLogger(playerController.class);
 
     public playerController(Player player) {
      this.player = player;
@@ -88,6 +90,7 @@ public class playerController {
           isMoveLeft = false;
         isMoveRight = false;
         root.getChildren().add(player);
+        logger.warn("Player died!");
     }
     public static void refresh(){
 
