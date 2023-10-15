@@ -1,22 +1,16 @@
 package com.example.invaders.model;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
-public class Enemy extends Sprite {
+import javafx.scene.image.Image;
+
+public class Enemy extends Sprite{
     private int health;
-
-    public Enemy(int x, int y, int w, int h, Color color) {
-        super(x, y, w, h, "enemy", color);
-
+    public Enemy(int x, int y, Image image, String type) {
+        super(x, y, image, type);
     }
 
-
-
-
-    public int getHealth() {
+    public int getHealth(){
         return health;
     }
-
-
 }
+

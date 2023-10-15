@@ -1,5 +1,15 @@
 package com.example.invaders.controller;
 
+import com.example.invaders.model.Sprite;
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
+import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.util.Duration;
+
+import java.util.List;
+
 import com.example.invaders.SpaceInvaderApp;
 
 import com.example.invaders.model.Bullet;
@@ -26,6 +36,7 @@ public class SpriteController {
     static Logger logger = LogManager.getLogger(SpriteController.class);
 
 
+
 public static void showSprites(){
       List<Sprite > sprites = sprites();
     for (int i = 0; i < sprites.size(); i++) {
@@ -46,6 +57,7 @@ public static void showSprites(){
                     if (s.getBoundsInParent().intersects(player.getBoundsInParent())) {
                         logger.error("Enemy bullet shot to player");
                         logger.debug("Before Dead Health :" + player.getHealth());
+
                         player.dead = true;
                         s.dead = true;
                         player.setDead(true);
@@ -78,13 +90,16 @@ public static void showSprites(){
                            if(player.getCurrentChance()>=4){
                                logger.error("player has already dead!");
                            }
+                        showExplosion(player);
+
 
                     }
                     break;
                 case "playerbullet":
                     s.moveUp();
-                    sprites().stream().filter(e -> e.type.equals("enemy")).forEach(enemy -> {
-                        if (s.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
+                    sprites().stream().filter(e->e.type.equals("enemy")).forEach(enemy->{
+                        if(s.getBoundsInParent().intersects(enemy.getBoundsInParent())){
+
                             enemy.dead = true;
                             s.dead = true;
                             enemy.setDead(true);
@@ -92,6 +107,7 @@ public static void showSprites(){
                             player.increaseScore(pointEarned);
                             System.out.println("Score:"+ player.getScore());
 
+                            showExplosion(enemy);
 
                         }
                     });
@@ -109,10 +125,12 @@ public static void showSprites(){
                     });
                     break;
                 case "enemy":
-                    if (t > 2) {
-                        if (Math.random() < 0.3) {
+
+                    if(t>2){
+                        if(Math.random()<0.3){
                             shoot(s);
                         }
+
                     }
                     break;
 
@@ -123,10 +141,33 @@ public static void showSprites(){
             Sprite s = (Sprite) n;
             return s.dead;
         });
-        if (t > 2) {
+
+        if(t>2){
             t = 0;
         }
     }
-}
 
+        private static void showExplosion(Sprite target) {
+        Image explosion_img=new Image(SpaceInvaderApp.class.getResourceAsStream("assets/explo1.png"));
+        Sprite explosion=new Sprite(0,0,explosion_img,"explosion");
+        explosion.setTranslateX(target.getTranslateX()-100);
+        explosion.setTranslateY(target.getTranslateY()-100);
+        root.getChildren().add(explosion);
+
+        int explosionDuration = 500; // Adjust the duration as needed
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(
+                        Duration.millis(explosionDuration),
+                        event -> root.getChildren().remove(explosion)
+                )
+        );
+
+        timeline.setCycleCount(1); // Play the animation once
+        timeline.play();
+    }
+
+
+
+}
 
