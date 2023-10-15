@@ -1,9 +1,7 @@
-package com.example.model;
+package com.example.invaders.model;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public  class Sprite extends ImageView {
     public boolean dead = false;
@@ -30,6 +28,18 @@ public  class Sprite extends ImageView {
 
     public void moveDown(){
         setTranslateY(getTranslateY() + 5);
+    }
+
+    public boolean isDead(){
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public String getType() {
+        return type;
     }
 }
 
