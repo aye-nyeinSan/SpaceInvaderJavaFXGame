@@ -1,5 +1,15 @@
 package com.example.invaders.controller;
 
+
+import com.example.invaders.model.Bullet;
+import com.example.invaders.model.Player;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static com.example.invaders.SpaceInvaderApp.root;
+
+
 import com.example.invaders.SpaceInvaderApp;
 import com.example.invaders.model.Bullet;
 import com.example.invaders.model.Player;
@@ -15,26 +25,29 @@ import java.util.stream.Collectors;
 
 import static com.example.invaders.SpaceInvaderApp.root;
 
-
 public class playerController {
     static Player player ;
     int score=0;
     static boolean isMoveLeft= false;
     static boolean isMoveRight= false;
-   public static long lastPlayerShotTime = 0;
+    public static long lastPlayerShotTime = 0;
     public static final long PLAYER_SHOOT_COOLDOWN = 500_000_000; // 0.5 seconds (adjust as needed)
     static Logger logger = LogManager.getLogger(playerController.class);
 
     public playerController(Player player) {
+
      this.player = player;
+
     }
 
     public void moveLeft(){
         isMoveLeft = true;
         isMoveRight = false;
+
        if(isMoveLeft){
            player.setTranslateX(player.getTranslateX() - 5);
        }
+
 
     }
     public void moveRight(){
@@ -53,12 +66,13 @@ public class playerController {
     public void checkCollision() {
         if (player.getTranslateX()>= 560)
         {
-           // System.out.println("player is collided with wall");
             player.setTranslateX(560);
             moveLeft();
         } else if (player.getTranslateX()<=0) {
             player.setTranslateX(0);
-           moveRight();
+
+            moveRight();
+
 
         }
     }
@@ -74,9 +88,6 @@ public class playerController {
     public static void respawn(){
         player.setTranslateX(300);
         player.setTranslateY(600);
-        player.setWidth(40);
-        player.setHeight(40);
-        player.setColor(Color.BLUE);
         player.setDead(false);
 
         if( player.getCurrentChance()<=3){
@@ -104,5 +115,4 @@ public class playerController {
         }, 10000); // 1000 milliseconds = 1 second
     }
 }
-
 
