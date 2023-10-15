@@ -100,14 +100,17 @@ public class SpaceInvaderApp extends Application {
                 }
             };
             logger.debug("Animation is working!");
-            timer.start();
-            logger.error("App can not start.");
+            try{
+                timer.start();
+                stage.setScene(scene);
+                stage.show();
+                logger.info("App started successfully.");
+            }
+            catch(Exception e){
+                logger.error("App can not start!");
 
+            }
 
-            // Set up the game scene and input handling
-
-            stage.setScene(scene);
-            stage.show();
 
         }
 
