@@ -1,5 +1,6 @@
 package com.example.invaders.model;
 
+
 import javafx.scene.image.Image;
 
 public class Enemy extends Sprite{
@@ -12,3 +13,4 @@ public class Enemy extends Sprite{
         return health;
     }
 }
+

@@ -1,5 +1,6 @@
 package com.example.invaders.model;
 
+
 import javafx.scene.image.Image;
 
 public class Player extends Sprite{
@@ -8,9 +9,9 @@ public class Player extends Sprite{
     }
     private int health;
     int score;
-
     int  chances;
     int currentChance;
+
 
 
     public int getChances() {
@@ -29,6 +30,17 @@ public class Player extends Sprite{
         this.currentChance = currentChance;
     }
 
+
+//     public Player(int x, int y, int w, int h, Color color) {
+//         super(x, y, w, h, "player", BLUE);
+//         health = 100;
+//         chances=3;
+//         currentChance=1;
+//        this.color = BLUE;
+//        score = 0;
+//     }
+
+
     public void setHealth(int health) {
         this.health = health;
     }
@@ -36,6 +48,7 @@ public class Player extends Sprite{
     public int getHealth() {
         return health;
     }
+
 
 
     public int getScore() {
@@ -47,6 +60,8 @@ public class Player extends Sprite{
     }
 
     public void increaseScore(int points) {
+
         score+= points;
+
     }
 }

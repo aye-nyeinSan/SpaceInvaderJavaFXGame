@@ -1,5 +1,6 @@
 package com.example.invaders.model;
 
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -9,16 +10,20 @@ public  class Sprite extends ImageView {
 
     public Sprite(int x, int y, Image image,String type){
         super(image);
+
+
         this.type = type;
         setTranslateX(x);
         setTranslateY(y);
     }
+
 
     public void moveLeft(){
         setTranslateX(getTranslateX() - 5);
     }
 
     public void moveRight(){
+
         setTranslateX(getTranslateX() + 5);
     }
 
@@ -30,7 +35,9 @@ public  class Sprite extends ImageView {
         setTranslateY(getTranslateY() + 5);
     }
 
-    public boolean isDead(){
+
+    public boolean isDead() {
+
         return dead;
     }
 
