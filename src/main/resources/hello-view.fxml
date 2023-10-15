@@ -13,7 +13,7 @@
    <children>
       <ImageView fitHeight="700.0" fitWidth="600.0">
          <image>
-            <Image url="@bg2.jpg" />
+            <Image url="@com/example/invaders/assets/bg2.jpg" />
          </image>
       </ImageView>
       <Text fill="#90df30" fontSmoothingType="LCD" layoutX="130.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Space Invader" textAlignment="CENTER">
