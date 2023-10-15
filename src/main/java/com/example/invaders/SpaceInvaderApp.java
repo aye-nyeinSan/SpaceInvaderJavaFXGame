@@ -80,16 +80,24 @@ public class SpaceInvaderApp extends Application {
         scene.setOnKeyPressed(e->{
             switch (e.getCode()){
                 case LEFT:
+                    logger.debug("User is clicking LEFT key ");
                     playerController.moveLeft();
+
                     break;
                 case RIGHT:
+                    logger.debug("User is clicking Right key ");
                     playerController.moveRight();
+
                     break;
                 case SPACE:
+                    logger.debug("User is clicking Space key ");
                     playerController.shoot();
+
                     break;
                 case C:
+                    logger.debug("User is clicking C key ");
                     playerController.shootSpecial();
+
 
             }
         });
@@ -105,12 +113,16 @@ public class SpaceInvaderApp extends Application {
             }
         };
         logger.debug("Animation is working!");
-        timer.start();
-        logger.error("App can not start.");
+        try{
+            timer.start();
+            stage.setScene(scene);
+            stage.show();
+            logger.info("App started successfully.");
+        }
+        catch(Exception e){
+            logger.error("App can not start!");
 
-
-
-// Set up the game scene and input handling
+        }
 
         stage.setScene(scene);
         stage.show();

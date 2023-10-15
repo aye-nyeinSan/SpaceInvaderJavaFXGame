@@ -79,7 +79,7 @@ public static void showSprites(){
                             delay.play();
                         }
 
-                           if(player.getCurrentChance()== 3 && player.getHealth()== 33) {
+                           if(player.getCurrentChance()== 3 && player.getHealth()<= 33) {
                                logger.warn("player has no life!");
                                logger.error("player is dead!");
                                Alert alert = new Alert(Alert.AlertType.INFORMATION);

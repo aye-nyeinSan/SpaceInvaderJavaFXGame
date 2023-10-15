@@ -24,7 +24,6 @@ public class enemyController {
 
     }
 
-
     public void moveEnemies(List<Enemy> enemies) {
         int paneWidth = 600;
         double enemySpeed = 0.8;
@@ -46,25 +45,25 @@ public class enemyController {
                 double distance = newX - (otherEnemy.getTranslateX() + otherEnemy.getLayoutX());
 
                 if (distance < distanceThreshold) {
+
                     newX = otherEnemy.getTranslateX() + otherEnemy.getLayoutX()+ distanceThreshold;
                  }
             }
-              if(newX < 0 ){
+            if(newX < 0 ){
                 direction = 1;
                 newX = currentEnemy.getTranslateX() + enemySpeed * direction;
                 currentEnemy.setTranslateX(newX+10);
 
-                    logger.debug("Enemy ship is moving!");
+
             }
         }
     }
-
-//    public void moveEnemies(List<Enemy> enemies) {
-//        int paneWidth = 600;
-//        double enemySpeed = 1;
-//        int distanceThreshold = 5; // Minimum distance between enemies
-//        boolean wallCollision = false;
+//    public void changeDirection(double delta) {
+//        speed *= -1.15d;
+//        enemySprite.setxPos(enemySprite.getxPos() - (delta * speed));
+//        this.getRect().x = (int) enemySprite.getxPos();
 //
+
 //        // Determine the direction based on wall collision
 //        int direction = wallCollision ? -1 : 1;
 
@@ -146,7 +145,21 @@ public class enemyController {
 
 //            }
 //        }
+
+//        enemySprite.setyPos(enemySprite.getyPos() + (delta * 15));
+//        this.getRect().y = (int) enemySprite.getyPos();
+
 //    }
+
+    public boolean isOutOfBounds(List<Enemy> enemies) {
+        for (Enemy enemy : enemies) {
+            if (enemy.getTranslateX() > 0 && enemy.getTranslateX() < 600 - enemy.getLayoutX())
+                return false;
+
+        }
+        return true;
+    }
+
 
 
 
