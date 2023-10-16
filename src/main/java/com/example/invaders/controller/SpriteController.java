@@ -17,6 +17,9 @@ import com.example.invaders.model.Sprite;
 import javafx.animation.PauseTransition;
 import javafx.scene.control.Alert;
 import javafx.util.Duration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 import java.util.List;
 import java.util.Timer;
@@ -30,13 +33,15 @@ import static com.example.invaders.model.Bullet.shoot;
 
 public class SpriteController {
     static double t = 0;
+    static Logger logger = LogManager.getLogger(SpriteController.class);
+
 
 
 
 public static void showSprites(){
       List<Sprite > sprites = sprites();
     for (int i = 0; i < sprites.size(); i++) {
-        System.out.println(sprites.get(i).type);
+        //System.out.println(sprites.get(i).type);
     }
 
 }
@@ -51,7 +56,9 @@ public static void showSprites(){
                     s.moveDown();
 
                     if (s.getBoundsInParent().intersects(player.getBoundsInParent())) {
-                        System.out.println("Before Dead Health :" + player.getHealth());
+                        logger.error("Enemy bullet shot to player");
+                        logger.debug("Before Dead Health :" + player.getHealth());
+
 
                         player.dead = true;
                         s.dead = true;
@@ -68,20 +75,25 @@ public static void showSprites(){
                             PauseTransition delay = new PauseTransition(Duration.seconds(1));
                             delay.setOnFinished(event -> {
                                 respawn();
-                                System.out.println("After dead, Health: " + player.getHealth());
-                                System.out.println("After dead , Current life: " + player.getCurrentChance());
+                                logger.debug("After dead, Health: " + player.getHealth());
+                                logger.debug("After dead , Current life: " + player.getCurrentChance());
                             });
                             delay.play();
                         }
 
-                        if(player.getCurrentChance()== 3 && player.getHealth()== 33) {
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setHeaderText(null);
-                            alert.setContentText("You are dead!");
-                            alert.show();
-                        }
-
+                           if(player.getCurrentChance()== 3 && player.getHealth()<= 33) {
+                               logger.warn("player has no life!");
+                               logger.error("player is dead!");
+                               Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                               alert.setHeaderText(null);
+                               alert.setContentText("You are dead!");
+                               alert.show();
+                           }
+                           if(player.getCurrentChance()>=4){
+                               logger.error("player has already dead!");
+                           }
                         showExplosion(player);
+
 
                     }
                     break;
@@ -138,7 +150,9 @@ public static void showSprites(){
     }
 
         private static void showExplosion(Sprite target) {
-        Image explosion_img=new Image("C:\\Users\\DELL\\Desktop\\SpaceInvader\\src\\main\\resources\\com\\example\\assets\\explo1.png");
+
+        Image explosion_img=new Image(SpaceInvaderApp.class.getResourceAsStream("assets/explo1.png"));
+
         Sprite explosion=new Sprite(0,0,explosion_img,"explosion");
         explosion.setTranslateX(target.getTranslateX()-100);
         explosion.setTranslateY(target.getTranslateY()-100);

@@ -11,7 +11,6 @@ public  class Sprite extends ImageView {
     public Sprite(int x, int y, Image image,String type){
         super(image);
 
-
         this.type = type;
         setTranslateX(x);
         setTranslateY(y);

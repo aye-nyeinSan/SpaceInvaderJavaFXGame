@@ -10,7 +10,8 @@ import static com.example.invaders.controller.playerController.lastPlayerShotTim
 
 public class Bullet extends Sprite{
     //bullet images
-    static Image bulletImage=new Image("C:\\Users\\DELL\\Desktop\\SpaceInvader\\src\\main\\resources\\com\\example\\assets\\bomb.png");
+
+    static Image bulletImage=new Image(SpaceInvaderApp.class.getResourceAsStream("assets/bomb.png"));
 
     public Bullet(int x, int y, Image image, String type) {
         super(x, y, image, type);
@@ -37,7 +38,7 @@ public class Bullet extends Sprite{
     public static void shootSpecial(Sprite who) {
         long currentTime = System.nanoTime();
         int xOffset = 20;
-        int yOffset = 0; // Adjust this value for the Y offset if needed
+        int yOffset = 0;
 
         if (who.type.equals("player") && currentTime - lastPlayerShotTime >= PLAYER_SHOOT_COOLDOWN) {
 

@@ -4,14 +4,19 @@ package com.example.invaders.model;
 import javafx.scene.image.Image;
 
 public class Player extends Sprite{
-    public Player(int x, int y, Image image, String type) {
-        super(x, y, image, type);
-    }
+
     private int health;
     int score;
     int  chances;
     int currentChance;
+    public Player(int x, int y, Image image, String type) {
 
+        super(x, y, image, type);
+        health = 100;
+         chances=3;
+         currentChance=1;
+        score = 0;
+    }
 
 
     public int getChances() {
@@ -30,15 +35,6 @@ public class Player extends Sprite{
         this.currentChance = currentChance;
     }
 
-
-//     public Player(int x, int y, int w, int h, Color color) {
-//         super(x, y, w, h, "player", BLUE);
-//         health = 100;
-//         chances=3;
-//         currentChance=1;
-//        this.color = BLUE;
-//        score = 0;
-//     }
 
 
     public void setHealth(int health) {

@@ -36,4 +36,10 @@ build/
 
 ### Mac OS ###
 .DS_Store
+<<<<<<< HEAD
 /logs/*
+=======
+
+#logFile
+logs
+>>>>>>> master
