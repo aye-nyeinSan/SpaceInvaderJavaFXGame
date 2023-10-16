@@ -10,6 +10,7 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -18,6 +19,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+
+
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -26,6 +38,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SpaceInvaderApp extends Application {
+
     public static Pane root = new Pane();
 
     public static List<Sprite> sprites(){
@@ -61,10 +74,10 @@ public class SpaceInvaderApp extends Application {
 
     public void startGame() {
         root.setPrefSize(600,700);
-        Image playerImage=new Image("C:\\Users\\DELL\\Desktop\\SpaceInvader\\src\\main\\resources\\com\\example\\assets\\player.png");
+        Image playerImage=new Image(SpaceInvaderApp.class.getResourceAsStream("ässets/player.png"));
         Player player = new Player(300, 600,playerImage, "player");
 
-        Image enemyImage=new Image("C:\\Users\\DELL\\Desktop\\SpaceInvader\\src\\main\\resources\\com\\example\\assets\\alien.png");
+        Image enemyImage=new Image(SpaceInvaderApp.class.getResourceAsStream("ässets/alien.png"));
         List<Enemy> enemies = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
@@ -130,6 +143,7 @@ public class SpaceInvaderApp extends Application {
         return root;
 
     }
+
 
     public static void main(String[] args) {
         launch(args);
