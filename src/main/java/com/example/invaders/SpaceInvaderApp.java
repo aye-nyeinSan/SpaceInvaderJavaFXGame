@@ -27,8 +27,8 @@ import java.util.stream.Collectors;
 
 
 public class SpaceInvaderApp extends Application {
-  public static Pane root = new Pane();
-  Logger logger = LogManager.getLogger(SpaceInvaderApp.class);
+    public static Pane root = new Pane();
+    Logger logger = LogManager.getLogger(SpaceInvaderApp.class);
     public static List<Sprite> sprites() {
         return root.getChildren().stream().map(n->(Sprite)n).collect(Collectors.toList());
     }
@@ -140,4 +140,3 @@ public class SpaceInvaderApp extends Application {
         launch(args);
     }
 }
-
