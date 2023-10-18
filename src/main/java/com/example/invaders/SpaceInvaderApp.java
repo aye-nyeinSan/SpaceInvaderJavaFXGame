@@ -51,15 +51,15 @@ public class SpaceInvaderApp extends Application {
 
         List<Enemy> enemies = new ArrayList<>();
 
-        for (int i = 0; i < 5; i++) {
-            enemies.add(new Enemy(90 + i * 100, 150, enemyImage, "enemy"));
-            Sprite s1 = new Sprite(90 + i * 100, 150, enemyImage, "enemy");
-            Sprite s2 = new Sprite(90 + i * 100, 200, enemyImage, "enemy");
-            Sprite s3 = new Sprite(90 + i * 100, 250, enemyImage, "enemy");
-            root.getChildren().addAll(enemies.get(i),s1,s2,s3);
-        }
 
+        //5 enemies by 3 lines
+       for(int j=0; j<3; j++){
+           for (int i = 0; i < 5; i++) {
+               enemies.add(new Enemy(90 + i * 100, 150 + j * 80 , enemyImage, "enemy"));
+               root.getChildren().addAll(enemies.get(enemies.size()-1));
+           }
 
+       }
         root.getChildren().add(player);
 
 
@@ -82,6 +82,7 @@ public class SpaceInvaderApp extends Application {
                 case LEFT:
                     logger.debug("User is clicking LEFT key ");
                     playerController.moveLeft();
+
 
                     break;
                 case RIGHT:
