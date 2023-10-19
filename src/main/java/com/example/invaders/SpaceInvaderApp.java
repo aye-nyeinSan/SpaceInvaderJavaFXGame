@@ -14,14 +14,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,9 +42,17 @@ public class SpaceInvaderApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        // Add the background to the root pane
+        Region background = new Region();
+       // background.setStyle("-fx-background-color: lightblue;");
+        Image img  = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/Sunset.jpg"));
+        BackgroundImage backgroundImg = new BackgroundImage(new ImagePattern(img).getImage(),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                new BackgroundSize(100, 100, true, true, true, true));
+        background.setBackground(new Background(backgroundImg));
+        background.setPrefSize(600, 700);  // Set the size to match your scene size
 
 
-        root.setPrefSize(600,700);
 
 
 // adding exploration effect
@@ -89,7 +96,7 @@ public class SpaceInvaderApp extends Application {
 
         overlay.getChildren().add(scoreBoard);
         StackPane stackPane = new StackPane();
-        stackPane.getChildren().addAll(root, overlay);
+        stackPane.getChildren().addAll(background,root, overlay);
 
 
         Scene scene=new Scene(stackPane);
