@@ -20,6 +20,7 @@ import javafx.scene.layout.*;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -89,6 +90,7 @@ public class SpaceInvaderApp extends Application {
         Pane overlay = new Pane();
         VBox scoreBoard = new VBox();
         scoreBoard.setAlignment(Pos.CENTER);
+        scoreBoard.setStyle("-fx-background-color: lightblue;");
 
 
         Label scoreLabel = new Label("Score: " + player.getScore());
