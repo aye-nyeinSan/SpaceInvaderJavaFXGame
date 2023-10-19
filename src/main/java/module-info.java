@@ -3,6 +3,9 @@ module com.example.invaders {
     requires javafx.fxml;
     requires org.apache.logging.log4j;
     requires org.apache.logging.log4j.core;
+    requires javafx.media;
+    requires javafx.graphics;
+    requires javafx.base;
 
 
 
