@@ -25,7 +25,7 @@ public class playerController {
 
     public playerController(Player player) {
 
-     this.player = player;
+        this.player = player;
 
     }
 
@@ -33,9 +33,9 @@ public class playerController {
         isMoveLeft = true;
         isMoveRight = false;
 
-       if(isMoveLeft){
-           player.setTranslateX(player.getTranslateX() - 5);
-       }
+        if(isMoveLeft){
+            player.setTranslateX(player.getTranslateX() - 5);
+        }
 
 
     }
@@ -87,7 +87,7 @@ public class playerController {
         if(player.getHealth()>=0){
             player.setHealth(100/player.getCurrentChance());
         }
-          isMoveLeft = false;
+        isMoveLeft = false;
         isMoveRight = false;
         root.getChildren().add(player);
         logger.warn("Player died!");
@@ -104,4 +104,3 @@ public class playerController {
         }, 10000); // 1000 milliseconds = 1 second
     }
 }
-

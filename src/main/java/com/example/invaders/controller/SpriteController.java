@@ -38,19 +38,19 @@ public class SpriteController {
 
 
 
-public static void showSprites(){
-      List<Sprite > sprites = sprites();
-    for (int i = 0; i < sprites.size(); i++) {
-        //System.out.println(sprites.get(i).type);
-    }
+    public static void showSprites(){
+        List<Sprite > sprites = sprites();
+        for (int i = 0; i < sprites.size(); i++) {
+            //System.out.println(sprites.get(i).type);
+        }
 
-}
+    }
 
     public static void update() {
         t += 0.016;
 
         sprites().forEach(s -> {
-              //  showSprites();
+            //  showSprites();
             switch (s.type) {
                 case "enemybullet":
                     s.moveDown();
@@ -81,17 +81,17 @@ public static void showSprites(){
                             delay.play();
                         }
 
-                           if(player.getCurrentChance()== 3 && player.getHealth()<= 33) {
-                               logger.warn("player has no life!");
-                               logger.error("player is dead!");
-                               Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                               alert.setHeaderText(null);
-                               alert.setContentText("You are dead!");
-                               alert.show();
-                           }
-                           if(player.getCurrentChance()>=4){
-                               logger.error("player has already dead!");
-                           }
+                        if(player.getCurrentChance()== 3 && player.getHealth()<= 33) {
+                            logger.warn("player has no life!");
+                            logger.error("player is dead!");
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setHeaderText(null);
+                            alert.setContentText("You are dead!");
+                            alert.show();
+                        }
+                        if(player.getCurrentChance()>=4){
+                            logger.error("player has already dead!");
+                        }
                         showExplosion(player);
 
 
@@ -149,7 +149,7 @@ public static void showSprites(){
         }
     }
 
-        private static void showExplosion(Sprite target) {
+    private static void showExplosion(Sprite target) {
 
         Image explosion_img=new Image(SpaceInvaderApp.class.getResourceAsStream("assets/explo1.png"));
 
@@ -174,4 +174,3 @@ public static void showSprites(){
 
 
 }
-

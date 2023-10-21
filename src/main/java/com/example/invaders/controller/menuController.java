@@ -10,13 +10,12 @@ public class menuController {
 
     @FXML
     public void onNewGame(ActionEvent event){
-        SpaceInvaderApp spaceInvaderApp=new SpaceInvaderApp();
-        spaceInvaderApp.startGame();
+            SpaceInvaderApp spaceInvaderApp=new SpaceInvaderApp();
+            spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 
     public void onQuit(ActionEvent event){
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         // Close the stage
         stage.close();
     }

@@ -54,24 +54,13 @@ public class SpaceInvaderApp extends Application {
     }
 
     private void setMainMenuScreen()throws Exception {
-//        StackPane mainMenuRoot=new StackPane();
-//        Scene mainMenuScene = new Scene(mainMenuRoot, 600, 500);
-//
-//        // Create a button to start the game
-//        Button startGameButton = new Button("Start Game");
-//        startGameButton.setOnAction(e -> startGame());
-//
-//        mainMenuRoot.getChildren().add(startGameButton);
-//
-//        stage.setScene(mainMenuScene);
-
         FXMLLoader fxmlLoader=new FXMLLoader(SpaceInvaderApp.class.getResource("/hello-view.fxml"));
         Scene mainMenuScene = new Scene(fxmlLoader.load(), 600, 700);
         this.stage.setTitle("Space Invaders");
         this.stage.setScene(mainMenuScene);
     }
 
-    public void startGame() {
+    public void startGame(Stage stage) {
         root.setPrefSize(600, 700);
 
 //player images
