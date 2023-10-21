@@ -61,7 +61,7 @@ public void startGame(Stage window){
             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
             new BackgroundSize(100, 100, true, true, true, true));
     background.setBackground(new Background(backgroundImg));
-    background.setPrefSize(600, 700);  // Set the size to match your scene size
+    background.setPrefSize(600, 650);  // Set the size to match your scene size
 //player images
     Image playerImage = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/player.png"));
 
@@ -69,7 +69,7 @@ public void startGame(Stage window){
     Image enemyImage = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/alien.png"));
 
 //creating player
-    Player player = new Player(300, 600, playerImage, "player");
+    Player player = new Player(300, 580, playerImage, "player");
 
     List<Enemy> enemies = new ArrayList<>();
 
@@ -174,6 +174,7 @@ public void startGame(Stage window){
         timer.start();
         window.setScene(scene);
         window.setResizable(false);
+
         window.show();
         logger.info("App started successfully.");
     } catch (Exception e) {
@@ -194,6 +195,16 @@ public void startGame(Stage window){
     public  static void playbackgroundSound(Media media){
         backgroundMediaPlayer = new MediaPlayer(media);
         backgroundMediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        backgroundMediaPlayer.play();
+
+    }
+    public  static void playbackgroundSoundOff(){
+
+        backgroundMediaPlayer.stop();
+
+    }
+    public  static void playbackgroundSoundOn(){
+
         backgroundMediaPlayer.play();
 
     }

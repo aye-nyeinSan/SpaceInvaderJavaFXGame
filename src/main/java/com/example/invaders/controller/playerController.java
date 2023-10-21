@@ -76,7 +76,7 @@ public class playerController {
 
     public static void respawn(){
         player.setTranslateX(300);
-        player.setTranslateY(600);
+        player.setTranslateY(580);
         player.setDead(false);
 
         if( player.getCurrentChance()<=3){
