@@ -6,6 +6,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
 import javafx.util.Duration;
 
 import java.util.List;
@@ -33,6 +34,7 @@ import static com.example.invaders.model.Bullet.shoot;
 
 public class SpriteController {
     static double t = 0;
+  public  static boolean isGameOver = false;
     static Logger logger = LogManager.getLogger(SpriteController.class);
 
 
@@ -60,6 +62,13 @@ public class SpriteController {
                         logger.debug("Before Dead Health :" + player.getHealth());
 
 
+                        Thread explosionSoundThread = new Thread(()->{
+                            SpaceInvaderApp.playEffectSound( new Media(SpaceInvaderApp.class.getResource("/sounds/explosion.wav").toExternalForm()));
+
+                        });
+                        explosionSoundThread.start();
+
+
                         player.dead = true;
                         s.dead = true;
                         player.setDead(true);
@@ -81,18 +90,24 @@ public class SpriteController {
                             delay.play();
                         }
 
-                        if(player.getCurrentChance()== 3 && player.getHealth()<= 33) {
-                            logger.warn("player has no life!");
-                            logger.error("player is dead!");
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setHeaderText(null);
-                            alert.setContentText("You are dead!");
-                            alert.show();
-                        }
-                        if(player.getCurrentChance()>=4){
-                            logger.error("player has already dead!");
-                        }
-                        showExplosion(player);
+                           if(player.getCurrentChance()== 3 && player.getHealth()<= 33) {
+                               Thread gameOverSoundThread = new Thread(()->{
+                                   SpaceInvaderApp.playEffectSound( new Media(SpaceInvaderApp.class.getResource("/sounds/gameover.m4a").toExternalForm()));
+
+                               });
+                               isGameOver = true;
+                               gameOverSoundThread.start();
+                               logger.warn("player has no life!");
+                               logger.error("player is dead!");
+                               Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                               alert.setHeaderText(null);
+                               alert.setContentText("You are dead!");
+                               alert.show();
+                           }
+                           if(player.getCurrentChance()>=4){
+                               logger.error("player has already dead!");
+                           }
+                       showExplosion(player);
 
 
                     }
