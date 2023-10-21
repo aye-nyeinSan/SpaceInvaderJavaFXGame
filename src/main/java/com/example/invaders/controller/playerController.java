@@ -4,6 +4,7 @@ package com.example.invaders.controller;
 import com.example.invaders.model.Bullet;
 import com.example.invaders.model.Player;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -15,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 public class playerController {
     static Player player ;
+    static ArrayList<Integer> previousScore = new ArrayList<Integer>();
     int score=0;
     static boolean isMoveLeft= false;
     static boolean isMoveRight= false;
@@ -103,4 +105,10 @@ public class playerController {
             }
         }, 10000); // 1000 milliseconds = 1 second
     }
+    public static int ShowPreviousScore(){
+        int current=player.getScore();
+        int previous= previousScore.get(previousScore.size()-2);
+        return previous;
+    }
+
 }

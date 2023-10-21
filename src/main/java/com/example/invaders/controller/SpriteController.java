@@ -97,11 +97,14 @@ public class SpriteController {
                                });
                                isGameOver = true;
                                gameOverSoundThread.start();
+                               previousScore.add(player.getScore());
+                               logger.info("Previous added as {}",player.getScore());
                                logger.warn("player has no life!");
                                logger.error("player is dead!");
                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                alert.setHeaderText(null);
                                alert.setContentText("You are dead!");
+                               alert.setContentText(String.valueOf(playerController.ShowPreviousScore()));
                                alert.show();
                            }
                            if(player.getCurrentChance()>=4){

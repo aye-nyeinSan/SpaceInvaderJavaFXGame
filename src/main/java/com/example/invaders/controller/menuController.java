@@ -30,10 +30,10 @@ public class menuController {
     }
     public void onSoundOff(ActionEvent event){
         if(this.soundBtn.isSelected())
-        {   soundBtn.setText("Sound On \uD83D\uDD0A ");
+        {   soundBtn.setText("Music On \uD83D\uDD0A ");
             SpaceInvaderApp.playbackgroundSoundOff();}
         else {
-            soundBtn.setText("Sound Off \uD83D\uDD07");
+            soundBtn.setText("Music Off \uD83D\uDD07");
             SpaceInvaderApp.playbackgroundSoundOn();}
 
     }
