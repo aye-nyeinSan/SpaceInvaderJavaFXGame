@@ -6,12 +6,17 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
+
+
+
+
 public class menuController {
 
     @FXML
     public void onNewGame(ActionEvent event){
             SpaceInvaderApp spaceInvaderApp=new SpaceInvaderApp();
             spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow());
+
     }
 
     public void onQuit(ActionEvent event){

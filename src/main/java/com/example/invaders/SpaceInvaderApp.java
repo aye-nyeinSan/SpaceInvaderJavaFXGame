@@ -55,7 +55,7 @@ public class SpaceInvaderApp extends Application {
 public void startGame(Stage window){
     // Add the background to the root pane
     Region background = new Region();
-    // background.setStyle("-fx-background-color: lightblue;");
+
     Image img  = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/Sunset.jpg"));
     BackgroundImage backgroundImg = new BackgroundImage(new ImagePattern(img).getImage(),
             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -170,8 +170,10 @@ public void startGame(Stage window){
     };
     logger.debug("Animation is working!");
     try {
+        backgroundMediaPlayer.stop();
         timer.start();
         window.setScene(scene);
+        window.setResizable(false);
         window.show();
         logger.info("App started successfully.");
     } catch (Exception e) {
@@ -196,9 +198,10 @@ public void startGame(Stage window){
 
     }
 
-            private void setMainMenuScreen()throws Exception {
+    private void setMainMenuScreen()throws Exception {
                 FXMLLoader fxmlLoader=new FXMLLoader(SpaceInvaderApp.class.getResource("/hello-view.fxml"));
-                Scene mainMenuScene = new Scene(fxmlLoader.load(), 600, 700);
+                Scene mainMenuScene = new Scene(fxmlLoader.load(), 600, 500);
+                playbackgroundSound(new Media(SpaceInvaderApp.class.getResource("/sounds/aggressivebackground.mp3").toExternalForm()));
                 this.stage.setTitle("Space Invaders");
                 this.stage.setScene(mainMenuScene);
             }
