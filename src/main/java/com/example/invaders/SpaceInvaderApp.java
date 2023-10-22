@@ -15,9 +15,11 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import javafx.stage.Stage;
@@ -63,7 +65,7 @@ public void startGame(Stage window){
     background.setBackground(new Background(backgroundImg));
     background.setPrefSize(600, 700);  // Set the size to match your scene size
 //player images
-    Image playerImage = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/player.png"));
+    Image playerImage = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/player1.png"));
 
 //enemy images
     Image enemyImage = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/alien.png"));
@@ -103,6 +105,26 @@ public void startGame(Stage window){
     overlay.getChildren().add(scoreBoard);
     StackPane stackPane = new StackPane();
     stackPane.getChildren().addAll(background,root, overlay);
+
+    //Player lives images
+    Image playerLife = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/shield.png"));
+    double iconSpacing=10.0;
+    for(int i=0;i<3;i++){
+        ImageView lifeicon=new ImageView(playerLife);
+        lifeicon.setLayoutX(i*(lifeicon.getBoundsInLocal().getWidth() + iconSpacing));
+        lifeicon.setLayoutY(20);
+        overlay.getChildren().add(lifeicon);
+    }
+
+    // Control Buttons
+
+    //pause button
+    Image pauseIcon = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/PauseIcon.png"));
+    Button pause=new Button("",new ImageView(pauseIcon));
+    pause.setTranslateX(550);
+    pause.setTranslateY(20);
+    overlay.getChildren().add(pause);
+
 
     Scene scene=new Scene(stackPane);
 
@@ -196,7 +218,7 @@ public void startGame(Stage window){
 
     }
 
-            private void setMainMenuScreen()throws Exception {
+            public void setMainMenuScreen()throws Exception {
                 FXMLLoader fxmlLoader=new FXMLLoader(SpaceInvaderApp.class.getResource("/hello-view.fxml"));
                 Scene mainMenuScene = new Scene(fxmlLoader.load(), 600, 700);
                 this.stage.setTitle("Space Invaders");

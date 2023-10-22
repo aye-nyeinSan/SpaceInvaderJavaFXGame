@@ -4,28 +4,19 @@ import com.example.invaders.model.Sprite;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.scene.control.Alert;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.List;
 
 import com.example.invaders.SpaceInvaderApp;
-
-import com.example.invaders.model.Bullet;
-import com.example.invaders.model.Sprite;
-import javafx.animation.PauseTransition;
-import javafx.scene.control.Alert;
-import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.stream.Collectors;
 
 import static com.example.invaders.SpaceInvaderApp.root;
 import static com.example.invaders.SpaceInvaderApp.sprites;
@@ -99,10 +90,9 @@ public class SpriteController {
                                gameOverSoundThread.start();
                                logger.warn("player has no life!");
                                logger.error("player is dead!");
-                               Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                               alert.setHeaderText(null);
-                               alert.setContentText("You are dead!");
-                               alert.show();
+
+                             showGameOverScreen();
+
                            }
                            if(player.getCurrentChance()>=4){
                                logger.error("player has already dead!");
@@ -162,6 +152,24 @@ public class SpriteController {
         if(t>2){
             t = 0;
         }
+    }
+
+    private static void showGameOverScreen(){
+        try{
+            FXMLLoader fxmlLoader=new FXMLLoader(SpriteController.class.getResource("/game-over.fxml"));
+            Scene mainMenuScene = new Scene(fxmlLoader.load(), 250, 250);
+            Stage gameOverStage=new Stage();
+            gameOverStage.setTitle("Game Over");
+            gameOverStage.setScene(mainMenuScene);
+            gameOverStage.show();
+
+            Text scoreVar=(Text) mainMenuScene.lookup("#scoreVar");
+            scoreVar.setText(String.valueOf(player.getScore()));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private static void showExplosion(Sprite target) {
