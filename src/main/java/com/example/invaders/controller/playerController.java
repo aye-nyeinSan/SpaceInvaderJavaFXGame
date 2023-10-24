@@ -10,16 +10,17 @@ import java.util.TimerTask;
 
 import static com.example.invaders.SpaceInvaderApp.root;
 
+import javafx.scene.input.KeyCode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
 public class playerController {
-    static Player player ;
+    static Player player;
     static ArrayList<Integer> previousScore = new ArrayList<Integer>();
-    int score=0;
-    static boolean isMoveLeft= false;
-    static boolean isMoveRight= false;
+    int score = 0;
+    public static boolean isMoveLeft = false;
+    static boolean isMoveRight = false;
     public static long lastPlayerShotTime = 0;
 
     public static final long PLAYER_SHOOT_COOLDOWN = 500_000_000; // 0.5 seconds (adjust as needed)
@@ -31,41 +32,42 @@ public class playerController {
 
     }
 
-    public void moveLeft(){
+    public void moveLeft() {
         isMoveLeft = true;
         isMoveRight = false;
 
-        if(isMoveLeft){
+        if (isMoveLeft) {
             player.setTranslateX(player.getTranslateX() - 5);
         }
 
 
     }
-    public void moveRight(){
+
+    public void moveRight() {
         isMoveLeft = false;
         isMoveRight = true;
-        if(isMoveRight){
+        if (isMoveRight) {
             player.setTranslateX(player.getTranslateX() + 5);
 
         }
     }
+
     public static Player getPlayer() {
         return player;
     }
 
 
-    public void checkCollision() {
-        if (player.getTranslateX()>= 560)
-        {
+    public static Boolean checkCollision() {
+        if (player.getTranslateX() >= 560) {
             player.setTranslateX(560);
-            moveLeft();
-        } else if (player.getTranslateX()<=0) {
+            isMoveRight=false;
+            return false;
+        } else if (player.getTranslateX() <= 0) {
             player.setTranslateX(0);
-
-            moveRight();
-
-
+            isMoveLeft = false;
+            return false;
         }
+        return true;
     }
 
     public void shoot() {
@@ -76,25 +78,27 @@ public class playerController {
         Bullet.shootSpecial(player);
     }
 
-    public static void respawn(){
+    public static void respawn() {
+        root.getChildren().remove(player);
         player.setTranslateX(300);
         player.setTranslateY(580);
         player.setDead(false);
 
-        if( player.getCurrentChance()<=3){
-            player.setCurrentChance(player.getCurrentChance()+1);
-            player.setChances(3- player.getCurrentChance());
+        if (player.getCurrentChance() <= 3) {
+            player.setChances(3 - player.getCurrentChance());
+            player.setCurrentChance(player.getCurrentChance() + 1);
         }
 
-        if(player.getHealth()>=0){
-            player.setHealth(100/player.getCurrentChance());
+        if (player.getHealth() >= 0) {
+            player.setHealth(100 / player.getCurrentChance());
         }
         isMoveLeft = false;
         isMoveRight = false;
         root.getChildren().add(player);
         logger.warn("Player died!");
     }
-    public static void refresh(){
+
+    public static void refresh() {
 
         Timer disappearTimer = new Timer();
         disappearTimer.schedule(new TimerTask() {
@@ -105,10 +109,11 @@ public class playerController {
             }
         }, 10000); // 1000 milliseconds = 1 second
     }
-    public static int ShowPreviousScore(){
-        int current=player.getScore();
-        int previous= previousScore.get(previousScore.size()-2);
+
+    public static int ShowPreviousScore() {
+        int previous = previousScore.get(previousScore.size() - 2);
         return previous;
     }
+
 
 }

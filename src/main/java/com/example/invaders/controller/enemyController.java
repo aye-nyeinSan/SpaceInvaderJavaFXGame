@@ -24,7 +24,7 @@ public class enemyController {
 
     }
 
-    public void moveEnemies(List<Enemy> enemies) {
+    public static void moveEnemies(List<Enemy> enemies) {
         int paneWidth = 600;
         double enemySpeed = 0.8;
         int direction = 1;

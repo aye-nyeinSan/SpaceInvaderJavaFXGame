@@ -19,6 +19,7 @@ public class menuController {
     @FXML
     public void onNewGame(ActionEvent event){
             SpaceInvaderApp spaceInvaderApp=new SpaceInvaderApp();
+            SpaceInvaderApp.playbackgroundSoundOff();
             spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow());
 
     }
@@ -38,4 +39,18 @@ public class menuController {
 
     }
 
+
+    public void onStartOver(ActionEvent event) {
+        SpriteController.closeGameOverScreen();
+        SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
+        spaceInvaderApp.closeMainGameStage();
+        SpriteController.RestartGame((Stage) ((Node) event.getSource()).getScene().getWindow());
+    }
+
+    public void onHome(ActionEvent event) throws Exception {
+        SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
+        spaceInvaderApp.closeMainGameStage();
+        spaceInvaderApp.start((Stage) ((Node) event.getSource()).getScene().getWindow());
+
+    }
 }

@@ -40,7 +40,7 @@
             <Font name="Agency FB Bold" size="18.0" />
          </font>
       </Button>
-      <ToggleButton fx:id="soundBtn" layoutX="239.0" layoutY="269.0" mnemonicParsing="false" onAction="#onSoundOff" prefHeight="38.0" prefWidth="122.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Sound Off🔇">
+      <ToggleButton fx:id="soundBtn" layoutX="239.0" layoutY="269.0" mnemonicParsing="false" onAction="#onSoundOff" prefHeight="38.0" prefWidth="122.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Music Off🔇">
          <font>
             <Font name="Agency FB Bold" size="18.0" />
          </font>
