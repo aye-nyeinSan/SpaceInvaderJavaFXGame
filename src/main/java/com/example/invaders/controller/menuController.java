@@ -19,9 +19,16 @@ public class menuController {
     @FXML
     public void onNewGame(ActionEvent event){
             SpaceInvaderApp spaceInvaderApp=new SpaceInvaderApp();
-            SpaceInvaderApp.playbackgroundSoundOff();
-            spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow());
-
+        boolean isSoundOff = this.soundBtn.isSelected();
+        System.out.println(isSoundOff);
+        if (!isSoundOff) {
+            // Start the new game with background music
+            spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow(),isSoundOff);
+        } else {
+            // Start the new game without background music
+            SpaceInvaderApp.playbackgroundSoundOff(); // Turn off background music
+            spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow(), isSoundOff);
+        }
     }
 
     public void onQuit(ActionEvent event){
@@ -44,7 +51,8 @@ public class menuController {
         SpriteController.closeGameOverScreen();
         SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
         spaceInvaderApp.closeMainGameStage();
-        SpriteController.RestartGame((Stage) ((Node) event.getSource()).getScene().getWindow());
+        SpriteController.RestartGame((Stage) ((Node) event.getSource()).getScene().getWindow(), true);
+
     }
 
     public void onHome(ActionEvent event) throws Exception {

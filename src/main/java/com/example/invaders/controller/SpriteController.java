@@ -3,9 +3,7 @@ package com.example.invaders.controller;
 import com.example.invaders.model.Sprite;
 import javafx.animation.*;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.text.Text;
@@ -18,19 +16,10 @@ import java.util.List;
 
 import com.example.invaders.SpaceInvaderApp;
 
-import com.example.invaders.model.Bullet;
-import com.example.invaders.model.Sprite;
 import javafx.animation.PauseTransition;
-import javafx.scene.control.Alert;
-import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.stream.Collectors;
 
 import static com.example.invaders.SpaceInvaderApp.*;
 import static com.example.invaders.controller.playerController.*;
@@ -167,14 +156,13 @@ public class SpriteController {
             t = 0;
         }
     }
-    public static void RestartGame(Stage window  ){
+    public static void RestartGame(Stage window ,Boolean isSoundOff ){
        if(window != null){
            window.close();
        }
-
         SpaceInvaderApp spaceInvaderApp=new SpaceInvaderApp();
-        spaceInvaderApp.RemoveEnemies();
-        spaceInvaderApp.startGame(window);
+        RemoveEnemies();
+        spaceInvaderApp.startGame(window, isSoundOff);
         isGameOver=false;
         player.setCurrentChance(1);
         player.setHealth(100);
@@ -183,7 +171,6 @@ public class SpriteController {
 
 
     }
-
     private static void showGameOverScreen() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(SpriteController.class.getResource("/game-over.fxml"));
@@ -208,6 +195,7 @@ public class SpriteController {
             gameOverStage.close();
         }
     }
+
     private static void showExplosion(Sprite target) {
 
         Image explosion_img = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/explo1.png"));

@@ -24,12 +24,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.ImagePattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,6 +51,7 @@ public class SpaceInvaderApp extends Application {
     public static Stage stage;
     private static boolean isPaused;
     private static AnimationTimer animationTimer;
+    Thread backgroundSoundThread;
 
     public static List<Sprite> sprites() {
         return root.getChildren().stream().map(n -> (Sprite) n).collect(Collectors.toList());
@@ -71,8 +72,10 @@ public class SpaceInvaderApp extends Application {
     @Override
     public void start(Stage window) throws Exception {
         stage = window;
+        stage.centerOnScreen();
         setMainMenuScreen(stage);
         stage.show();
+
     }
 
 public void closeMainGameStage(){
@@ -80,29 +83,34 @@ public void closeMainGameStage(){
         stage.close();
     }
 }
-    public void startGame(Stage window) {
+    public void startGame(Stage window, boolean isSoundOff) {
+        playbackgroundSoundOff();
         stage = window;
         platform= new GamePlatform();
         Region background = platform.addingBackgroundImage();
         Player player = platform.addingPlayer(root);
-//        // Check if there are existing enemies, and if so, remove them
-//        List<Enemy> existingEnemies = root.getChildren().stream()
-//                .filter(node -> node instanceof Enemy)
-//                .map(node -> (Enemy) node)
-//                .toList();
-//
-//        if (!existingEnemies.isEmpty()) {
-//            root.getChildren().removeAll(existingEnemies);
-//        }
+
+        // Check if there are existing enemies, and if so, remove them
+        List<Enemy> existingEnemies = root.getChildren().stream()
+                .filter(node -> node instanceof Enemy)
+                .map(node -> (Enemy) node)
+                .collect(Collectors.toList());
+
+        if (!existingEnemies.isEmpty()) {
+            root.getChildren().removeAll(existingEnemies);
+        }
 
         List<Enemy> enemies = platform.addingEnemies(root);
 
-      
-
-        Thread backgroundSoundThread = new Thread(() -> {
+        if(isSoundOff){
+            playbackgroundSoundOff();
+        }
+        else
+        { backgroundSoundThread = new Thread(() -> {
             playbackgroundSound(new Media(SpaceInvaderApp.class.getResource("/sounds/aggressivebackground.mp3").toExternalForm()));
         });
         backgroundSoundThread.start();
+        }
 
         playerController playerController = new playerController(player);
         enemyController enemyController = new enemyController(enemies);
@@ -165,7 +173,6 @@ public void closeMainGameStage(){
                     Platform.runLater(() -> {
                         scoreLabel.setText("Score: " + player.getScore());
                         if (isGameOver) {
-                            backgroundSoundThread.interrupt();
                             backgroundMediaPlayer.stop();
                             overlay.getChildren().removeAll();
                         }
@@ -174,9 +181,17 @@ public void closeMainGameStage(){
                 executor.execute(() -> {
                     Platform.runLater(() -> {
                         addLives(overlay, player.getChances());
-                        addPauseButton(overlay);
+
+
                     });
                 });
+                executor.execute(() -> {
+                    Platform.runLater(() -> {
+                       workingPauseButton(addPauseButton(overlay));
+
+                    });
+                });
+                overlay.requestFocus();
             }
         };
 
@@ -185,6 +200,7 @@ public void closeMainGameStage(){
         try {
             animationTimer.start();
             stage.setScene(scene);
+            stage.centerOnScreen();
             stage.setResizable(false);
 
             stage.show();
@@ -205,33 +221,48 @@ public void closeMainGameStage(){
             animationTimer.stop();
         }
     }
-    public static List<Enemy> addEnemies(){
-        List<Enemy> enemies = new ArrayList<>();
-        Image enemyImage = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/alien.png"));
-
-        //5 enemies by 3 lines
-        for (int j = 0; j < 3; j++) {
-            for (int i = 0; i < 5; i++) {
-                enemies.add(new Enemy(90 + i * 100, 150 + j * 80, enemyImage, "enemy"));
-                root.getChildren().addAll(enemies.get(enemies.size() - 1));
-            }
-
-        }
-        return enemies;
-    }
 
 
 
-    private void addPauseButton(Pane overlay) {
+    private Button addPauseButton(Pane overlay) {
         Image pauseIcon = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/PauseIcon.png"));
-        Button pause = new Button("", new ImageView(pauseIcon));
-        pause.setStyle(" -fx-border-width: 0;");
-        pause.setStyle("-fx-background-radius: 60%");
+        Button pause = new Button();
+        pause.setGraphic(new ImageView(pauseIcon));
+        pause.setStyle("-fx-background-radius: 40%");
         pause.setTranslateX(540);
         pause.setTranslateY(7);
         overlay.getChildren().add(pause);
+        pause.setFocusTraversable(true);
+        return pause;
     }
+public void workingPauseButton(Button pause){
+    Image playIcon = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/playIcon.png"));
+    Stage pauseStage = new Stage();
+    pauseStage.initOwner(stage);
+    pauseStage.initModality(Modality.APPLICATION_MODAL);
+    pauseStage.setTitle("Game Paused");
+    pauseStage.setWidth(200);
+    pauseStage.setHeight(100);
+    VBox pauseMenu = new VBox();
+    pauseMenu.setAlignment(Pos.CENTER);
+    Label pauseLabel = new Label("Game Paused");
+    Button resumeButton = new Button("Resume");
+    resumeButton.setGraphic(new ImageView(playIcon));
+    pauseMenu.getChildren().addAll(pauseLabel, resumeButton);
 
+
+    resumeButton.setOnAction(event -> {
+        pauseStage.close();
+        startAnimation();
+    });
+    Scene pauseScene = new Scene(pauseMenu);
+    pauseStage.setScene(pauseScene);
+    pause.setOnAction(event ->
+    { logger.debug("Pause button is clicked!");
+        pauseStage.show();
+        stopAnimation();
+    });
+}
 
 
     private void addLives(Pane overlay,int playerChances) {
@@ -287,6 +318,9 @@ public void closeMainGameStage(){
         playbackgroundSound(new Media(SpaceInvaderApp.class.getResource("/sounds/aggressivebackground.mp3").toExternalForm()));
         getStage().setTitle("Space Invaders");
         getStage().setScene(mainMenuScene);
+        getStage().centerOnScreen();
+
+
     }
 
 
