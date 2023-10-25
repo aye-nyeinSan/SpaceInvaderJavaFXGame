@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 
 import javafx.stage.Stage;
@@ -124,6 +125,18 @@ public void startGame(Stage window){
     pause.setTranslateX(550);
     pause.setTranslateY(20);
     overlay.getChildren().add(pause);
+    pause.setOnAction(event -> {
+        try{
+            FXMLLoader fxmlLoader=new FXMLLoader(SpriteController.class.getResource("/pause.fxml"));
+            Scene mainMenuScene = new Scene(fxmlLoader.load(), 200, 200);
+            Stage pauseStage=new Stage();
+            pauseStage.setScene(mainMenuScene);
+            pauseStage.show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    });
 
 
     Scene scene=new Scene(stackPane);
@@ -132,19 +145,15 @@ public void startGame(Stage window){
 
     scene.setOnKeyPressed(e->{
         switch (e.getCode()){
-
-            case LEFT:
+            case A:
                 logger.debug("User is clicking LEFT key ");
                 playerController.moveLeft();
-
-
                 break;
-            case RIGHT:
+            case D:
                 logger.debug("User is clicking Right key ");
                 playerController.moveRight();
-
                 break;
-            case SPACE:
+            case F:
                 logger.debug("User is clicking Space key ");
                 playerController.shoot();
                 new Thread(()->{
@@ -157,10 +166,7 @@ public void startGame(Stage window){
                 playerController.shootSpecial();
                 new Thread(()->{
                     playEffectSound( new Media(SpaceInvaderApp.class.getResource("/sounds/shoot.wav").toExternalForm()));
-
                 }).start();
-                break;
-
 
         }
     });

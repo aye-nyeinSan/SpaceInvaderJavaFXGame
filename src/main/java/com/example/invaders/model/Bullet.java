@@ -9,9 +9,17 @@ import static com.example.invaders.controller.playerController.PLAYER_SHOOT_COOL
 import static com.example.invaders.controller.playerController.lastPlayerShotTime;
 
 public class Bullet extends Sprite{
-    //bullet images
+    //enemy bullet images
+    static Image enemyBullet=new Image(SpaceInvaderApp.class.getResourceAsStream("assets/fireball.png"));
 
-    static Image bulletImage=new Image(SpaceInvaderApp.class.getResourceAsStream("assets/bomb.png"));
+    //player bullet images
+    static Image normalBullet=new Image(SpaceInvaderApp.class.getResourceAsStream("assets/bullet.png"));
+    static Image specialBullet=new Image(SpaceInvaderApp.class.getResourceAsStream("assets/bomb.png"));
+
+
+
+
+
 
     public Bullet(int x, int y, Image image, String type) {
         super(x, y, image, type);
@@ -25,10 +33,10 @@ public class Bullet extends Sprite{
 
         if (who.type.equals("enemy")) {
 
-            Bullet bullet = new Bullet((int) who.getTranslateX() + xOffset, (int) who.getTranslateY() + yOffset, bulletImage,who.type + "bullet");
+            Bullet bullet = new Bullet((int) who.getTranslateX() + xOffset, (int) who.getTranslateY() + yOffset, enemyBullet,who.type + "bullet");
             SpaceInvaderApp.getRoot().getChildren().addAll(bullet);
         } else if (who.type.equals("player") && currentTime - lastPlayerShotTime >= PLAYER_SHOOT_COOLDOWN) {
-            Bullet bullet1 = new Bullet((int) who.getTranslateX() + xOffset, (int) who.getTranslateY() + yOffset, bulletImage, who.type + "bullet");
+            Bullet bullet1 = new Bullet((int) who.getTranslateX() + xOffset, (int) who.getTranslateY() + yOffset, normalBullet, who.type + "bullet");
 
             SpaceInvaderApp.getRoot().getChildren().addAll(bullet1);
             lastPlayerShotTime = currentTime;
@@ -42,7 +50,7 @@ public class Bullet extends Sprite{
 
         if (who.type.equals("player") && currentTime - lastPlayerShotTime >= PLAYER_SHOOT_COOLDOWN) {
 
-            Bullet bullet2 = new Bullet((int) who.getTranslateX() + xOffset, (int) who.getTranslateY() + yOffset, bulletImage, who.type + "specialBullet");
+            Bullet bullet2 = new Bullet((int) who.getTranslateX() + xOffset, (int) who.getTranslateY() + yOffset, specialBullet, who.type + "specialBullet");
 
             SpaceInvaderApp.getRoot().getChildren().addAll(bullet2);
             lastPlayerShotTime = currentTime;

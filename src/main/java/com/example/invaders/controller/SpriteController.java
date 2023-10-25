@@ -34,9 +34,8 @@ public class SpriteController {
     public static void showSprites(){
         List<Sprite > sprites = sprites();
         for (int i = 0; i < sprites.size(); i++) {
-            //System.out.println(sprites.get(i).type);
-        }
 
+        }
     }
 
     public static void update() {
@@ -51,8 +50,6 @@ public class SpriteController {
                     if (s.getBoundsInParent().intersects(player.getBoundsInParent())) {
                         logger.error("Enemy bullet shot to player");
                         logger.debug("Before Dead Health :" + player.getHealth());
-
-
                         Thread explosionSoundThread = new Thread(()->{
                             SpaceInvaderApp.playEffectSound( new Media(SpaceInvaderApp.class.getResource("/sounds/explosion.wav").toExternalForm()));
 
@@ -132,12 +129,10 @@ public class SpriteController {
                     });
                     break;
                 case "enemy":
-
                     if(t>2){
                         if(Math.random()<0.3){
                             shoot(s);
                         }
-
                     }
                     break;
 
@@ -153,7 +148,6 @@ public class SpriteController {
             t = 0;
         }
     }
-
     private static void showGameOverScreen(){
         try{
             FXMLLoader fxmlLoader=new FXMLLoader(SpriteController.class.getResource("/game-over.fxml"));
@@ -162,7 +156,6 @@ public class SpriteController {
             gameOverStage.setTitle("Game Over");
             gameOverStage.setScene(mainMenuScene);
             gameOverStage.show();
-
             Text scoreVar=(Text) mainMenuScene.lookup("#scoreVar");
             scoreVar.setText(String.valueOf(player.getScore()));
         }
@@ -173,12 +166,10 @@ public class SpriteController {
     }
 
     private static void showExplosion(Sprite target) {
-
         Image explosion_img=new Image(SpaceInvaderApp.class.getResourceAsStream("assets/explo1.png"));
-
         Sprite explosion=new Sprite(0,0,explosion_img,"explosion");
-        explosion.setTranslateX(target.getTranslateX()-100);
-        explosion.setTranslateY(target.getTranslateY()-100);
+        explosion.setTranslateX(target.getTranslateX()-50);
+        explosion.setTranslateY(target.getTranslateY()-50);
         root.getChildren().add(explosion);
 
         int explosionDuration = 500; // Adjust the duration as needed
