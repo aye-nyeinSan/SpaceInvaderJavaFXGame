@@ -2,6 +2,7 @@ package com.example.invaders;
 
 import com.example.invaders.controller.SpriteController;
 import com.example.invaders.controller.enemyController;
+import com.example.invaders.controller.menuController;
 import com.example.invaders.controller.playerController;
 import com.example.invaders.exception.exceptionHandle;
 import com.example.invaders.model.Enemy;
@@ -23,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 import javafx.stage.Modality;
@@ -40,6 +42,7 @@ import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 import static com.example.invaders.controller.SpriteController.isGameOver;
+
 
 
 public class SpaceInvaderApp extends Application {
@@ -92,13 +95,12 @@ public void stopGame(Stage window){
         stage = window;
         stage.close();
 }
-    public void startGame(Stage window, boolean isSoundOff) {
+    public void startGame(Stage window,Player player ,boolean isSoundOff) {
         playbackgroundSoundOff();
         stage = window;
         platform= new GamePlatform();
-        Region background = platform.addingBackgroundImage();
-        Player player = platform.addingPlayer(root);
 
+        Region background = platform.addingBackgroundImage();
         // Check if there are existing enemies, and if so, remove them
         List<Enemy> existingEnemies = root.getChildren().stream()
                 .filter(node -> node instanceof Enemy)

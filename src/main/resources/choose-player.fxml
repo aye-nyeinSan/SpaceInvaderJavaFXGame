@@ -18,17 +18,17 @@
             <Font name="Agency FB Bold" size="48.0" />
          </font>
       </Label>
-      <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="78.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="playerImg1" fitHeight="150.0" fitWidth="150.0" layoutX="78.0" layoutY="155.0" onMouseClicked="#addPlayer" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@com/example/invaders/assets/player1.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="249.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="playerImg2" fitHeight="150.0" fitWidth="150.0" layoutX="249.0" layoutY="155.0" onMouseClicked="#addPlayer" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@com/example/invaders/assets/player2.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="130.0" fitWidth="148.0" layoutX="413.0" layoutY="165.0">
+      <ImageView fx:id="playerImg3" fitHeight="130.0" fitWidth="148.0" layoutX="413.0" layoutY="165.0" onMouseClicked="#addPlayer">
          <image>
             <Image url="@com/example/invaders/assets/player3.png" />
          </image>

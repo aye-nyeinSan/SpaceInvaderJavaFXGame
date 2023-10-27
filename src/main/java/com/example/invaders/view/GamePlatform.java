@@ -5,6 +5,7 @@ import com.example.invaders.model.Boss;
 import com.example.invaders.model.Enemy;
 import com.example.invaders.model.Player;
 import javafx.animation.*;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,12 +31,19 @@ public class GamePlatform {
         return background;
     }
 
-    public Player addingPlayer(Pane pane) {
-        //Adding player
-        Image playerImage = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/player1.png"));
+    public Player addingPlayer(Pane pane,Image selectedImg) {
+        if(selectedImg!=null){
+            Player player = new Player(300, 580, selectedImg, "player");
+            pane.getChildren().add(player);
+            return player;
+        }else
+        {//Adding player
+        Image playerImage = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/player3.png"));
         Player player = new Player(300, 580, playerImage, "player");
         pane.getChildren().add(player);
-        return player;
+            return player;
+        }
+
     }
 
     public List<Enemy> addingEnemies(Pane pane) {
@@ -68,12 +76,10 @@ public class GamePlatform {
 
 
 
-
     public List<Enemy> getEnemies() {
         return this.enemies;
     }
 
-    public void setEnemies(List<Enemy> enemies) {
-        this.enemies = (ArrayList<Enemy>) enemies;
-    }
+
+
 }

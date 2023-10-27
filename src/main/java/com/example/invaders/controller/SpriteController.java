@@ -166,7 +166,7 @@ public class SpriteController {
         SpaceInvaderApp spaceInvaderApp=new SpaceInvaderApp();
         RemoveEnemies();
 
-        spaceInvaderApp.startGame(window, isSoundOff);
+        spaceInvaderApp.startGame(window,player,isSoundOff);
         isGameOver=false;
         player.setCurrentChance(1);
         player.setHealth(100);

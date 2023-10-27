@@ -1,16 +1,21 @@
 package com.example.invaders.controller;
 
 import com.example.invaders.SpaceInvaderApp;
+import com.example.invaders.model.Player;
+import com.example.invaders.view.GamePlatform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import static com.example.invaders.SpaceInvaderApp.getStackPane;
-import static com.example.invaders.SpaceInvaderApp.setStackPane;
+import static com.example.invaders.SpaceInvaderApp.*;
+import static com.example.invaders.controller.playerController.player;
 
 
 public class menuController {
@@ -25,11 +30,11 @@ public class menuController {
         System.out.println(isSoundOff);
         if (!isSoundOff) {
             // Start the new game with background music
-            spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow(),isSoundOff);
+            spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow(),player,isSoundOff);
         } else {
             // Start the new game without background music
             SpaceInvaderApp.playbackgroundSoundOff(); // Turn off background music
-            spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow(), isSoundOff);
+            spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow(),player, isSoundOff);
         }
     }
 
@@ -58,7 +63,7 @@ public class menuController {
         SpriteController.closeGameOverScreen();
         SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
         spaceInvaderApp.closeMainGameStage();
-        spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow(),true);
+        spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow(),player,true);
 
     }
 
@@ -82,4 +87,17 @@ public class menuController {
         }
 
     }
+    public void addPlayer(MouseEvent event) throws Exception {
+        GamePlatform platform = new GamePlatform();
+        ImageView clickedImageView = (ImageView) event.getSource();
+        Image selectedImage = clickedImageView.getImage();
+        Player player = platform.addingPlayer(root,selectedImage);
+         System.out.println("Image selected");
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
+        spaceInvaderApp.startGame(stage, player,true);
+
+    }
+
+
 }
