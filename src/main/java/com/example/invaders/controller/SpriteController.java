@@ -9,7 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.util.List;
@@ -18,14 +20,14 @@ import com.example.invaders.SpaceInvaderApp;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.example.invaders.SpaceInvaderApp.root;
-import static com.example.invaders.SpaceInvaderApp.sprites;
+import static com.example.invaders.SpaceInvaderApp.*;
 import static com.example.invaders.controller.playerController.*;
 import static com.example.invaders.model.Bullet.shoot;
 
 public class SpriteController {
     static double t = 0;
-  public  static boolean isGameOver = false;
+    static  Stage gameOverStage;
+    public  static boolean isGameOver = false;
     static Logger logger = LogManager.getLogger(SpriteController.class);
 
 
@@ -62,7 +64,7 @@ public class SpriteController {
                         player.setDead(true);
                         s.setDead(true);
 
-                        if (player.getCurrentChance() < 3) {
+                        if (player.getCurrentChance() < 4) {
                             root.getChildren().removeIf(n -> {
                                 Sprite one = (Sprite) n;
                                 return one.dead;
@@ -78,23 +80,26 @@ public class SpriteController {
                             delay.play();
                         }
 
-                           if(player.getCurrentChance()== 3 && player.getHealth()<= 33) {
-                               Thread gameOverSoundThread = new Thread(()->{
-                                   SpaceInvaderApp.playEffectSound( new Media(SpaceInvaderApp.class.getResource("/sounds/gameover.m4a").toExternalForm()));
+                       else if(player.getCurrentChance()== 4) {
+                           player.setHealth(0);
+                            Thread gameOverSoundThread = new Thread(()->{
+                                SpaceInvaderApp.playEffectSound( new Media(SpaceInvaderApp.class.getResource("/sounds/gameover.m4a").toExternalForm()));
 
-                               });
-                               isGameOver = true;
-                               gameOverSoundThread.start();
-                               logger.warn("player has no life!");
-                               logger.error("player is dead!");
+                            });
+                            isGameOver = true;
+                            gameOverSoundThread.start();
+                            previousScore.add(player.getScore());
+                            logger.info("Previous added as {}", player.getScore());
+                            logger.warn("player has no life!");
+                            logger.error("player is dead!");
 
-                             showGameOverScreen();
+                            showGameOverScreen();
 
-                           }
-                           if(player.getCurrentChance()>=4){
-                               logger.error("player has already dead!");
-                           }
-                       showExplosion(player);
+                        }
+                        if(player.getCurrentChance()>=4){
+                            logger.error("player has already dead!");
+                        }
+                        showExplosion(player);
 
 
                     }
@@ -110,7 +115,7 @@ public class SpriteController {
                             int pointEarned=5;
                             player.increaseScore(pointEarned);
                             System.out.println("Score:"+ player.getScore());
-
+//                            platform.getEnemies().remove(enemy);
                             showExplosion(enemy);
 
                         }
@@ -122,6 +127,7 @@ public class SpriteController {
                         if (s.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
                             enemy.dead = true;
                             s.dead = true;
+                           // platform.getEnemies().remove(enemy);
                             int pointEarned=10;
                             player.increaseScore(pointEarned);
                             System.out.println("Score:"+ player.getScore());
@@ -153,9 +159,12 @@ public class SpriteController {
             FXMLLoader fxmlLoader=new FXMLLoader(SpriteController.class.getResource("/game-over.fxml"));
             Scene mainMenuScene = new Scene(fxmlLoader.load(), 250, 250);
             Stage gameOverStage=new Stage();
+            gameOverStage.initStyle(StageStyle.UTILITY);
+            gameOverStage.initModality(Modality.WINDOW_MODAL);
             gameOverStage.setTitle("Game Over");
             gameOverStage.setScene(mainMenuScene);
             gameOverStage.show();
+//            SpaceInvaderApp.stopAnimation();
             Text scoreVar=(Text) mainMenuScene.lookup("#scoreVar");
             scoreVar.setText(String.valueOf(player.getScore()));
         }
@@ -164,6 +173,7 @@ public class SpriteController {
         }
 
     }
+
 
     private static void showExplosion(Sprite target) {
         Image explosion_img=new Image(SpaceInvaderApp.class.getResourceAsStream("assets/explo1.png"));
@@ -186,5 +196,26 @@ public class SpriteController {
     }
 
 
+    public static void RestartGame(Stage window ,Boolean isSoundOff ){
+        if(window != null){
+            window.close();
+        }
+        SpaceInvaderApp spaceInvaderApp=new SpaceInvaderApp();
+        RemoveEnemies();
+        spaceInvaderApp.startGame(window, isSoundOff);
+        isGameOver=false;
+        player.setCurrentChance(1);
+        player.setHealth(100);
+        player.setScore(0);
+        player.setChances(3);
+
+
+    }
+
+    public static void closeGameOverScreen() {
+        if (gameOverStage != null) {
+            gameOverStage.close();
+        }
+    }
 
 }

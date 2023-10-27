@@ -9,6 +9,7 @@ public class Player extends Sprite{
     int score;
     int  chances;
     int currentChance;
+    double width;
     public Player(int x, int y, Image image, String type) {
 
         super(x, y, image, type);
@@ -16,6 +17,7 @@ public class Player extends Sprite{
          chances=3;
          currentChance=1;
         score = 0;
+        width = image.getWidth();
     }
 
 
@@ -59,5 +61,9 @@ public class Player extends Sprite{
 
         score+= points;
 
+    }
+
+    public double getWidth() {
+        return width;
     }
 }

@@ -1,13 +1,15 @@
 package com.example.invaders.controller;
 
-
+import com.example.invaders.exception.exceptionHandle;
 import com.example.invaders.model.Bullet;
 import com.example.invaders.model.Player;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.example.invaders.SpaceInvaderApp.root;
+import static com.example.invaders.SpaceInvaderApp.stackPane;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,13 +17,15 @@ import org.apache.logging.log4j.Logger;
 
 public class playerController {
     static Player player ;
-    int score=0;
+    static ArrayList<Integer> previousScore = new ArrayList<Integer>();
     static boolean isMoveLeft= false;
     static boolean isMoveRight= false;
     public static long lastPlayerShotTime = 0;
 
     public static final long PLAYER_SHOOT_COOLDOWN = 500_000_000; // 0.5 seconds (adjust as needed)
     static Logger logger = LogManager.getLogger(playerController.class);
+    static exceptionHandle exception = new exceptionHandle();
+
 
     public playerController(Player player) {
 
@@ -52,18 +56,21 @@ public class playerController {
     }
 
 
-    public void checkCollision() {
-        if (player.getTranslateX()>= 560)
-        {
+    public static boolean checkCollision() {
+        if (player.getTranslateX() >= 560) {
             player.setTranslateX(560);
-            moveLeft();
-        } else if (player.getTranslateX()<=0) {
+            exception.showTalkingDialog("I've hit \n the right wall",player,stackPane,"right" );
+            logger.debug("Dialog textbox is shown");
+            isMoveRight=false;
+            return false;
+        } else if (player.getTranslateX() <= 0) {
             player.setTranslateX(0);
-
-            moveRight();
-
-
+            exception.showTalkingDialog("I've hit \n the left wall",player,stackPane,"left" );
+            logger.debug("Dialog textbox is shown");
+            isMoveLeft = false;
+            return false;
         }
+        return true;
     }
 
     public void shoot() {
@@ -75,13 +82,14 @@ public class playerController {
     }
 
     public static void respawn(){
+        root.getChildren().remove(player);
         player.setTranslateX(300);
         player.setTranslateY(600);
         player.setDead(false);
 
         if( player.getCurrentChance()<=3){
-            player.setCurrentChance(player.getCurrentChance()+1);
-            player.setChances(3- player.getCurrentChance());
+            player.setChances(3 - player.getCurrentChance());
+            player.setCurrentChance(player.getCurrentChance() + 1);
         }
 
         if(player.getHealth()>=0){
@@ -102,5 +110,10 @@ public class playerController {
                 disappearTimer.cancel();
             }
         }, 10000); // 1000 milliseconds = 1 second
+    }
+
+    public static int ShowPreviousScore() {
+        int previous = previousScore.get(previousScore.size() - 2);
+        return previous;
     }
 }
