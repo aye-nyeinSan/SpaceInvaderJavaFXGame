@@ -53,7 +53,6 @@ public class menuController {
     @FXML
     public Boolean onSoundOff(){
        soundOff= this.soundBtn.isSelected();
-       System.out.println("isSoundOff: "+soundOff);
         if(soundOff)
         {   soundBtn.setText("Music On \uD83D\uDD0A ");
             SpaceInvaderApp.playbackgroundSoundOff();
@@ -69,7 +68,6 @@ public class menuController {
     @FXML
     public void addPlayer(MouseEvent event) throws Exception {
         boolean isSoundOff = menuController.soundOff;
-        System.out.println("add player on sound off: "+isSoundOff);
         GamePlatform platform = new GamePlatform();
         ImageView clickedImageView = (ImageView) event.getSource();
         Image selectedImage = clickedImageView.getImage();

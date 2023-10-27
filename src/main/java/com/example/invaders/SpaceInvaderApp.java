@@ -51,7 +51,7 @@ public class SpaceInvaderApp extends Application {
     public static Pane root = new Pane();
     public static Pane exceptionPane = new Pane();
    public static  GamePlatform platform;
-    public static  StackPane stackPane= new StackPane();
+
 
     Logger logger = LogManager.getLogger(SpaceInvaderApp.class);
     private static MediaPlayer backgroundMediaPlayer;
@@ -141,9 +141,11 @@ public void stopGame(Stage window){
         overlay.getChildren().add(scoreBoard);
 
         exceptionPane = new Pane();
+        StackPane stackPane= new StackPane();
 
         if(stackPane.getChildren().isEmpty()){
             stackPane.getChildren().addAll(background,root, overlay,exceptionPane);
+            scene = new Scene(stackPane);
         }
         else{
             System.out.println("Removed children");
@@ -151,7 +153,7 @@ public void stopGame(Stage window){
         }
 
         exceptionHandle exception = new exceptionHandle();
-         scene = new Scene(stackPane);
+
         scene.getRoot().requestFocus();
         scene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
@@ -210,7 +212,6 @@ public void stopGame(Stage window){
                     Platform.runLater(() -> {
                         scoreLabel.setText("Score: " + player.getScore());
                         if (isGameOver) {
-                            backgroundSoundThread.interrupt();
                             backgroundMediaPlayer.stop();
                             overlay.getChildren().removeAll();
                         }
@@ -348,13 +349,6 @@ public void workingPauseButton(Button pause){
         return stage;
     }
 
-    public static StackPane getStackPane() {
-        return stackPane;
-    }
-
-    public static void setStackPane(StackPane stackPane) {
-        SpaceInvaderApp.stackPane = stackPane;
-    }
 
     public void setMainMenuScreen(Stage window) throws Exception {
         stage=window;
