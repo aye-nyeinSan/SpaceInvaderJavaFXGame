@@ -34,10 +34,11 @@ public class menuController {
     public void onHelp(ActionEvent event){
         try{
             FXMLLoader fxmlLoader=new FXMLLoader(SpriteController.class.getResource("/Help.fxml"));
-            Scene mainMenuScene = new Scene(fxmlLoader.load(), 600, 400);
+            Scene mainMenuScene = new Scene(fxmlLoader.load(), 600, 502);
             Stage helpStage=new Stage();
             helpStage.setTitle("Player");
             helpStage.setScene(mainMenuScene);
+            helpStage.setResizable(false);
             helpStage.show();
         }
         catch (Exception e){
