@@ -22,7 +22,7 @@ public class menuController {
 
     @FXML
     ToggleButton soundBtn;
-    private boolean soundOff;
+    private static boolean soundOff;
 
 //    @FXML
 //    public void onNewGame(ActionEvent event){
@@ -53,6 +53,7 @@ public class menuController {
     @FXML
     public Boolean onSoundOff(){
        soundOff= this.soundBtn.isSelected();
+       System.out.println("isSoundOff: "+soundOff);
         if(soundOff)
         {   soundBtn.setText("Music On \uD83D\uDD0A ");
             SpaceInvaderApp.playbackgroundSoundOff();
@@ -63,6 +64,20 @@ public class menuController {
             SpaceInvaderApp.playbackgroundSoundOn();
             return false;
         }
+
+    }
+    @FXML
+    public void addPlayer(MouseEvent event) throws Exception {
+        boolean isSoundOff = menuController.soundOff;
+        System.out.println("add player on sound off: "+isSoundOff);
+        GamePlatform platform = new GamePlatform();
+        ImageView clickedImageView = (ImageView) event.getSource();
+        Image selectedImage = clickedImageView.getImage();
+        Player player = platform.addingPlayer(root,selectedImage);
+        System.out.println("Image selected");
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
+        spaceInvaderApp.startGame(stage, player,  isSoundOff);
 
     }
 
@@ -101,20 +116,7 @@ public class menuController {
         }
 
     }
-    @FXML
-    public void addPlayer(MouseEvent event) throws Exception {
-         menuController menuController = new menuController();
-        boolean isSoundOff = menuController.soundOff;
-        GamePlatform platform = new GamePlatform();
-        ImageView clickedImageView = (ImageView) event.getSource();
-        Image selectedImage = clickedImageView.getImage();
-        Player player = platform.addingPlayer(root,selectedImage);
-         System.out.println("Image selected");
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
-        spaceInvaderApp.startGame(stage, player,  isSoundOff);
 
-    }
 
 
 }

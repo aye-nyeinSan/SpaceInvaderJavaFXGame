@@ -96,8 +96,10 @@ public void stopGame(Stage window){
         stage.close();
 }
     public void startGame(Stage window,Player player,boolean MusicOff) {
+        playbackgroundSoundOff();
         stage = window;
         platform= new GamePlatform();
+        System.out.println("MusicOff: "+ MusicOff);//false
 
         Region background = platform.addingBackgroundImage();
         // Check if there are existing enemies, and if so, remove them
@@ -112,13 +114,17 @@ public void stopGame(Stage window){
 
         List<Enemy> enemies = platform.addingEnemies(root);
         if(MusicOff)
-        {backgroundSoundThread = new Thread(() -> {
-
-            playbackgroundSound(new Media(SpaceInvaderApp.class.getResource("/sounds/aggressivebackground.mp3").toExternalForm()));
-        });
-        backgroundSoundThread.start();}
-        else{
+        {
             playbackgroundSoundOff();
+        }
+        else
+            {
+                backgroundSoundThread = new Thread(() -> {
+
+                    playbackgroundSound(new Media(SpaceInvaderApp.class.getResource("/sounds/aggressivebackground.mp3").toExternalForm()));
+                });
+                backgroundSoundThread.start();
+
         }
 
 
