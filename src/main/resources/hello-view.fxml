@@ -25,7 +25,7 @@
             <Font name="Agency FB Bold" size="20.0" />
          </font>
       </Button>
-      <Button layoutX="239.0" layoutY="214.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="122.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Choose Player">
+      <Button onAction="#onChoosePlayer"  layoutX="239.0" layoutY="214.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="122.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Choose Player">
          <font>
             <Font name="Agency FB Bold" size="18.0" />
          </font>
