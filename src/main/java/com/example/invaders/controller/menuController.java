@@ -33,8 +33,13 @@ public class menuController {
 
     public void onQuit(ActionEvent event){
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        // Close the stage
         stage.close();
+    }
+    public void onQuitGameConsole(ActionEvent event){
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SpaceInvaderApp app = new SpaceInvaderApp();
+        stage.close();
+        app.stopGame(SpaceInvaderApp.getStage());
     }
     public void onSoundOff(ActionEvent event){
         if(this.soundBtn.isSelected())

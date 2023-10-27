@@ -84,6 +84,10 @@ public void closeMainGameStage(){
         stage.close();
     }
 }
+public void stopGame(Stage window){
+        stage = window;
+        stage.close();
+}
     public void startGame(Stage window, boolean isSoundOff) {
         playbackgroundSoundOff();
         stage = window;

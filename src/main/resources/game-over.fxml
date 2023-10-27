@@ -13,17 +13,17 @@
             <Font name="Niagara Engraved" size="48.0" />
          </font>
       </Label>
-      <Button layoutX="89.0" layoutY="137.0" mnemonicParsing="false" onAction="#onStartOver" text="Start Over">
+      <Button layoutX="76.0" layoutY="108.0" mnemonicParsing="false" onAction="#onStartOver" text="Start Over">
          <font>
-            <Font name="Arial Narrow" size="14.0" />
+            <Font name="Agency FB" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="103.0" layoutY="175.0" mnemonicParsing="false" onAction="#onHome" text="Home">
+      <Button layoutX="82.0" layoutY="150.0" mnemonicParsing="false" onAction="#onHome" prefHeight="27.0" prefWidth="71.0" text="Home">
          <font>
-            <Font name="Agency FB" size="14.0" />
+            <Font name="Agency FB" size="18.0" />
          </font>
       </Button>
-      <Text fill="#3d50ad" layoutX="81.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
+      <Text fill="#3d50ad" layoutX="82.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
          <font>
             <Font name="Agency FB" size="24.0" />
          </font>
@@ -33,5 +33,10 @@
             <Font name="Agency FB" size="24.0" />
          </font>
       </Text>
+      <Button layoutX="82.0" layoutY="193.0" mnemonicParsing="false" onAction="#onQuitGameConsole" prefHeight="27.0" prefWidth="71.0" text="Quit">
+         <font>
+            <Font name="Agency FB" size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
