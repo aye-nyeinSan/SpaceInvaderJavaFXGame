@@ -61,4 +61,7 @@ public class menuController {
         spaceInvaderApp.start((Stage) ((Node) event.getSource()).getScene().getWindow());
 
     }
+    public void onChoosePlayer(){
+
+    }
 }

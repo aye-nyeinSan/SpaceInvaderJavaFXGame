@@ -45,6 +45,7 @@ public class SpaceInvaderApp extends Application {
 
     public static Pane root = new Pane();
     GamePlatform platform;
+    public static  StackPane stackPane= new StackPane();
 
     Logger logger = LogManager.getLogger(SpaceInvaderApp.class);
     private static MediaPlayer backgroundMediaPlayer;
@@ -123,7 +124,6 @@ public void closeMainGameStage(){
         scoreBoard.getChildren().add(scoreLabel);
 
         overlay.getChildren().add(scoreBoard);
-        StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(background, root, overlay);
 
 
@@ -162,12 +162,17 @@ public void closeMainGameStage(){
         animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                ExecutorService executor = Executors.newFixedThreadPool(4);
                 SpriteController.update();
                 enemyController.moveEnemies(enemies);
-                playerController.checkCollision();
+                executor.execute(() -> {
+                    Platform.runLater(() -> {
+                        playerController.checkCollision();
+                    });
+                });
                 scoreLabel.setText("Score: " + player.getScore());
 
-                ExecutorService executor = Executors.newFixedThreadPool(4);
+
 
                 executor.execute(() -> {
                     Platform.runLater(() -> {
@@ -181,10 +186,9 @@ public void closeMainGameStage(){
                 executor.execute(() -> {
                     Platform.runLater(() -> {
                         addLives(overlay, player.getChances());
-
-
                     });
                 });
+
                 executor.execute(() -> {
                     Platform.runLater(() -> {
                        workingPauseButton(addPauseButton(overlay));

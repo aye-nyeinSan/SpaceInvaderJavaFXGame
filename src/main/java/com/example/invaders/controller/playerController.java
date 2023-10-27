@@ -1,6 +1,7 @@
 package com.example.invaders.controller;
 
 
+import com.example.invaders.exception.exceptionHandle;
 import com.example.invaders.model.Bullet;
 import com.example.invaders.model.Player;
 
@@ -9,6 +10,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.example.invaders.SpaceInvaderApp.root;
+import static com.example.invaders.SpaceInvaderApp.stackPane;
 
 import javafx.scene.input.KeyCode;
 import org.apache.logging.log4j.LogManager;
@@ -25,6 +27,7 @@ public class playerController {
 
     public static final long PLAYER_SHOOT_COOLDOWN = 500_000_000; // 0.5 seconds (adjust as needed)
     static Logger logger = LogManager.getLogger(playerController.class);
+    static exceptionHandle exception = new exceptionHandle();
 
     public playerController(Player player) {
 
@@ -60,10 +63,14 @@ public class playerController {
     public static Boolean checkCollision() {
         if (player.getTranslateX() >= 560) {
             player.setTranslateX(560);
+            exception.showTalkingDialog("I've hit \n the right wall",player,stackPane,"right" );
+            logger.debug("Dialog textbox is shown");
             isMoveRight=false;
-            return false;
+          return false;
         } else if (player.getTranslateX() <= 0) {
             player.setTranslateX(0);
+            exception.showTalkingDialog("I've hit \n the left wall",player,stackPane,"left" );
+            logger.debug("Dialog textbox is shown");
             isMoveLeft = false;
             return false;
         }

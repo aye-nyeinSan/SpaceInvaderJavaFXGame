@@ -1,11 +1,13 @@
 package com.example.invaders.exception;
 
+import com.example.invaders.SpaceInvaderApp;
 import com.example.invaders.model.Player;
 import com.example.invaders.model.Sprite;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -21,34 +23,45 @@ public class exceptionHandle  {
 
 
 
-    public void showTalkingDialog(String s,Player player, Pane root) {
-        // Create a Text node for the dialog
+    public void showTalkingDialog(String s, Player player, Pane root, String direction) {
         Text dialogText = new Text(s);
-        dialogText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        dialogText.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
         dialogText.setFill(Color.BLACK);
 
-        // Create a Rectangle node as the background for the dialog
-        Rectangle dialogBackground = new Rectangle(200, 50, Color.WHITE);
-        dialogBackground.setOpacity(0.7);
+        // Load the appropriate dialog background image based on the direction
+        Image dialogBackgroundImage;
+        if (direction.equals("right")) {
+            dialogBackgroundImage = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/dialoug.png"));
+        } else if (direction.equals("left")) {
+            dialogBackgroundImage = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/leftdialoug.png"));
+        } else {
+            // Use a default dialog background image or handle other directions as needed
+            dialogBackgroundImage = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/rightdialoug.png"));
+        }
 
-        // Create a StackPane to contain both the dialog background and text
+        ImageView dialogBackgroundImgView = new ImageView(dialogBackgroundImage);
+
         StackPane dialogPane = new StackPane();
-        dialogPane.getChildren().addAll(dialogBackground, dialogText);
+        dialogPane.getChildren().addAll(dialogBackgroundImgView, dialogText);
 
-        // Position the dialog beside the player
+        double dialogX = 0;
+        if (direction.equals("right")) {
+            dialogX = player.getTranslateX() - player.getWidth() - 300;
+        } else if (direction.equals("left")) {
+            dialogX = player.getTranslateX() -player.getWidth() - 180;
+        }
 
-        dialogPane.setTranslateX(player.getTranslateX() + player.getBoundsInParent().getWidth() + 10);
-        dialogPane.setTranslateY(player.getTranslateY() - 20);
+        dialogPane.setTranslateX(dialogX);
+        dialogPane.setTranslateY(200);
 
         // Add the dialogPane to the game scene (root)
         root.getChildren().add(dialogPane);
 
-        // You may want to use a timeline to remove the dialog after a certain time
-        Duration dialogDuration = Duration.seconds(3);
-        PauseTransition dialogRemoval = new PauseTransition(dialogDuration);
+        PauseTransition dialogRemoval = new PauseTransition();
         dialogRemoval.setOnFinished(event -> {
             root.getChildren().remove(dialogPane);
         });
         dialogRemoval.play();
     }
-}
+
+    }
