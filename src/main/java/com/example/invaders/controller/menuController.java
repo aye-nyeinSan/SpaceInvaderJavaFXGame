@@ -9,8 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 
-
-
+import static com.example.invaders.SpaceInvaderApp.getStackPane;
+import static com.example.invaders.SpaceInvaderApp.setStackPane;
 
 
 public class menuController {
@@ -54,11 +54,11 @@ public class menuController {
     }
 
 
-    public void onStartOver(ActionEvent event) {
+    public void onStartOver(ActionEvent event) throws Exception {
         SpriteController.closeGameOverScreen();
         SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
         spaceInvaderApp.closeMainGameStage();
-        SpriteController.RestartGame((Stage) ((Node) event.getSource()).getScene().getWindow(), true);
+        spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow(),true);
 
     }
 

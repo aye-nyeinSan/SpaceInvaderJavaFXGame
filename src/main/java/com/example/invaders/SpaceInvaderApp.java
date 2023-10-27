@@ -3,6 +3,7 @@ package com.example.invaders;
 import com.example.invaders.controller.SpriteController;
 import com.example.invaders.controller.enemyController;
 import com.example.invaders.controller.playerController;
+import com.example.invaders.exception.exceptionHandle;
 import com.example.invaders.model.Enemy;
 import com.example.invaders.model.Player;
 import com.example.invaders.model.Sprite;
@@ -43,7 +44,9 @@ import static com.example.invaders.controller.SpriteController.isGameOver;
 
 public class SpaceInvaderApp extends Application {
 
+     Scene scene;
     public static Pane root = new Pane();
+    public static Pane exceptionPane = new Pane();
    public static  GamePlatform platform;
     public static  StackPane stackPane= new StackPane();
 
@@ -129,16 +132,19 @@ public void stopGame(Stage window){
         scoreBoard.getChildren().add(scoreLabel);
 
         overlay.getChildren().add(scoreBoard);
+
+        exceptionPane = new Pane();
+
         if(stackPane.getChildren().isEmpty()){
-            stackPane.getChildren().addAll(background,root, overlay);
+            stackPane.getChildren().addAll(background,root, overlay,exceptionPane);
         }
         else{
             System.out.println("Removed children");
             stackPane.getChildren().removeAll();
         }
 
-
-        Scene scene = new Scene(stackPane);
+        exceptionHandle exception = new exceptionHandle();
+         scene = new Scene(stackPane);
         scene.getRoot().requestFocus();
         scene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
@@ -168,7 +174,10 @@ public void stopGame(Stage window){
                     break;
 
 
+                default:
+                   exception.showTalkingDialog("You clicked \n another key: \n" + e.getCode(), player, exceptionPane, "default");
             }
+
         });
         animationTimer = new AnimationTimer() {
             @Override
@@ -331,6 +340,14 @@ public void workingPauseButton(Button pause){
         return stage;
     }
 
+    public static StackPane getStackPane() {
+        return stackPane;
+    }
+
+    public static void setStackPane(StackPane stackPane) {
+        SpaceInvaderApp.stackPane = stackPane;
+    }
+
     public void setMainMenuScreen(Stage window) throws Exception {
         stage=window;
         FXMLLoader fxmlLoader = new FXMLLoader(SpaceInvaderApp.class.getResource("/hello-view.fxml"));
@@ -341,10 +358,6 @@ public void workingPauseButton(Button pause){
         getStage().centerOnScreen();
 
 
-    }
-
-    public static StackPane getStackPane() {
-        return stackPane;
     }
 
 

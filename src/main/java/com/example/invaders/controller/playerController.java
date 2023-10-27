@@ -60,15 +60,16 @@ public class playerController {
 
 
     public static Boolean checkCollision() {
+
         if (player.getTranslateX() >= 560) {
             player.setTranslateX(560);
-            exception.showTalkingDialog("I've hit \n the right wall",player,stackPane,"right" );
+            exception.showTalkingDialog("I've hit \n the right wall",player,exceptionPane,"right" );
             logger.debug("Dialog textbox is shown");
             isMoveRight=false;
           return false;
         } else if (player.getTranslateX() <= 0) {
             player.setTranslateX(0);
-            exception.showTalkingDialog("I've hit \n the left wall",player,stackPane,"left" );
+            exception.showTalkingDialog("I've hit \n the left wall",player,exceptionPane,"left" );
             logger.debug("Dialog textbox is shown");
             isMoveLeft = false;
             return false;
@@ -100,21 +101,12 @@ public class playerController {
         }
         isMoveLeft = false;
         isMoveRight = false;
+
         root.getChildren().add(player);
-        logger.warn("Player died!");
+        logger.warn("Player respawned!");
     }
 
-    public static void refresh() {
 
-        Timer disappearTimer = new Timer();
-        disappearTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-
-                disappearTimer.cancel();
-            }
-        }, 10000); // 1000 milliseconds = 1 second
-    }
 
     public static int ShowPreviousScore() {
         int previous = previousScore.get(previousScore.size() - 2);
