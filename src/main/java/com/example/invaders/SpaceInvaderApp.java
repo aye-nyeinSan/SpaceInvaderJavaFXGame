@@ -95,8 +95,7 @@ public void stopGame(Stage window){
         stage = window;
         stage.close();
 }
-    public void startGame(Stage window,Player player ,boolean isSoundOff) {
-        playbackgroundSoundOff();
+    public void startGame(Stage window,Player player,boolean MusicOff) {
         stage = window;
         platform= new GamePlatform();
 
@@ -112,16 +111,16 @@ public void stopGame(Stage window){
         }
 
         List<Enemy> enemies = platform.addingEnemies(root);
+        if(MusicOff)
+        {backgroundSoundThread = new Thread(() -> {
 
-        if(isSoundOff){
-            playbackgroundSoundOff();
-        }
-        else
-        { backgroundSoundThread = new Thread(() -> {
             playbackgroundSound(new Media(SpaceInvaderApp.class.getResource("/sounds/aggressivebackground.mp3").toExternalForm()));
         });
-        backgroundSoundThread.start();
+        backgroundSoundThread.start();}
+        else{
+            playbackgroundSoundOff();
         }
+
 
         playerController playerController = new playerController(player);
         enemyController enemyController = new enemyController(enemies);
@@ -205,6 +204,7 @@ public void stopGame(Stage window){
                     Platform.runLater(() -> {
                         scoreLabel.setText("Score: " + player.getScore());
                         if (isGameOver) {
+                            backgroundSoundThread.interrupt();
                             backgroundMediaPlayer.stop();
                             overlay.getChildren().removeAll();
                         }

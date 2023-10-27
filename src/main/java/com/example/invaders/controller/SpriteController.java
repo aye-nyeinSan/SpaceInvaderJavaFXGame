@@ -159,14 +159,14 @@ public class SpriteController {
             t = 0;
         }
     }
-    public static void RestartGame(Stage window ,Boolean isSoundOff ){
+    public static void RestartGame(Stage window ){
        if(window != null){
            window.close();
        }
         SpaceInvaderApp spaceInvaderApp=new SpaceInvaderApp();
         RemoveEnemies();
 
-        spaceInvaderApp.startGame(window,player,isSoundOff);
+        spaceInvaderApp.startGame(window,player,true);
         isGameOver=false;
         player.setCurrentChance(1);
         player.setHealth(100);
