@@ -9,18 +9,17 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.example.invaders.SpaceInvaderApp.root;
-import static com.example.invaders.SpaceInvaderApp.stackPane;
-
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import static com.example.invaders.SpaceInvaderApp.*;
 
 
 public class playerController {
     static Player player;
     static ArrayList<Integer> previousScore = new ArrayList<Integer>();
-    int score = 0;
     public static boolean isMoveLeft = false;
     static boolean isMoveRight = false;
     public static long lastPlayerShotTime = 0;

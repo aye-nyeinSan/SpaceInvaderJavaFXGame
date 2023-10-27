@@ -23,7 +23,7 @@ public class exceptionHandle  {
 
 
 
-    public void showTalkingDialog(String s, Player player, Pane root, String direction) {
+    public void showTalkingDialog(String s, Player player, Pane pane, String direction) {
         Text dialogText = new Text(s);
         dialogText.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 20));
         dialogText.setFill(Color.BLACK);
@@ -55,11 +55,11 @@ public class exceptionHandle  {
         dialogPane.setTranslateY(200);
 
         // Add the dialogPane to the game scene (root)
-        root.getChildren().add(dialogPane);
+        pane.getChildren().add(dialogPane);
 
         PauseTransition dialogRemoval = new PauseTransition();
         dialogRemoval.setOnFinished(event -> {
-            root.getChildren().remove(dialogPane);
+            pane.getChildren().remove(dialogPane);
         });
         dialogRemoval.play();
     }

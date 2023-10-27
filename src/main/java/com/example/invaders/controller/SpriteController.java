@@ -1,6 +1,7 @@
 package com.example.invaders.controller;
 
 import com.example.invaders.model.Sprite;
+import com.example.invaders.view.GamePlatform;
 import javafx.animation.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -94,6 +95,7 @@ public class SpriteController {
                             logger.warn("player has no life!");
                             logger.error("player is dead!");
 
+
                             //GameOverScreen
                             showGameOverScreen();
                         }
@@ -116,7 +118,7 @@ public class SpriteController {
                             int pointEarned = 5;
                             player.increaseScore(pointEarned);
                             System.out.println("Score:" + player.getScore());
-
+                            platform.getEnemies().remove(enemy);
                             showExplosion(enemy);
 
                         }
@@ -128,6 +130,7 @@ public class SpriteController {
                         if (s.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
                             enemy.dead = true;
                             s.dead = true;
+                            platform.getEnemies().remove(enemy);
                             int pointEarned = 10;
                             player.increaseScore(pointEarned);
                             System.out.println("Score:" + player.getScore());
@@ -201,8 +204,8 @@ public class SpriteController {
         Image explosion_img = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/explo1.png"));
 
         Sprite explosion = new Sprite(0, 0, explosion_img, "explosion");
-        explosion.setTranslateX(target.getTranslateX() - 100);
-        explosion.setTranslateY(target.getTranslateY() - 100);
+        explosion.setTranslateX(target.getTranslateX() - 50);
+        explosion.setTranslateY(target.getTranslateY() - 50);
         root.getChildren().add(explosion);
 
         int explosionDuration = 500; // Adjust the duration as needed

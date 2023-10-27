@@ -3,7 +3,9 @@ package com.example.invaders.controller;
 import com.example.invaders.SpaceInvaderApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 
@@ -67,6 +69,17 @@ public class menuController {
 
     }
     public void onChoosePlayer(){
+        try{
+            FXMLLoader fxmlLoader=new FXMLLoader(SpriteController.class.getResource("/choose-player.fxml"));
+            Scene mainMenuScene = new Scene(fxmlLoader.load(), 600, 400);
+            Stage choosePlayerStage=new Stage();
+            choosePlayerStage.setTitle("Player");
+            choosePlayerStage.setScene(mainMenuScene);
+            choosePlayerStage.show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 }

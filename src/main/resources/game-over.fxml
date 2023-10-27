@@ -28,7 +28,7 @@
             <Font name="Agency FB" size="24.0" />
          </font>
       </Text>
-      <Text fx:id="scoreVar" fill="#3d50ad" layoutX="138.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Text fx:id="scoreVar" fill="#3d50ad" layoutX="144.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font name="Agency FB" size="24.0" />
          </font>

@@ -44,7 +44,7 @@ import static com.example.invaders.controller.SpriteController.isGameOver;
 public class SpaceInvaderApp extends Application {
 
     public static Pane root = new Pane();
-    GamePlatform platform;
+   public static  GamePlatform platform;
     public static  StackPane stackPane= new StackPane();
 
     Logger logger = LogManager.getLogger(SpaceInvaderApp.class);
@@ -53,6 +53,7 @@ public class SpaceInvaderApp extends Application {
     private static boolean isPaused;
     private static AnimationTimer animationTimer;
     Thread backgroundSoundThread;
+    static  boolean isSpawned=false;
 
     public static List<Sprite> sprites() {
         return root.getChildren().stream().map(n -> (Sprite) n).collect(Collectors.toList());
@@ -128,7 +129,13 @@ public void stopGame(Stage window){
         scoreBoard.getChildren().add(scoreLabel);
 
         overlay.getChildren().add(scoreBoard);
-        stackPane.getChildren().addAll(background, root, overlay);
+        if(stackPane.getChildren().isEmpty()){
+            stackPane.getChildren().addAll(background,root, overlay);
+        }
+        else{
+            System.out.println("Removed children");
+            stackPane.getChildren().removeAll();
+        }
 
 
         Scene scene = new Scene(stackPane);
@@ -168,6 +175,11 @@ public void stopGame(Stage window){
             public void handle(long now) {
                 ExecutorService executor = Executors.newFixedThreadPool(4);
                 SpriteController.update();
+                if(!isSpawned && platform.getEnemies().size() <= 10){
+                    playbackgroundSound(new Media(SpaceInvaderApp.class.getResource("/sounds/BossComing.mp3").toExternalForm()));
+                    GamePlatform.BossSpawning(root);
+                    isSpawned = true;
+                }
                 enemyController.moveEnemies(enemies);
                 executor.execute(() -> {
                     Platform.runLater(() -> {
@@ -329,6 +341,10 @@ public void workingPauseButton(Button pause){
         getStage().centerOnScreen();
 
 
+    }
+
+    public static StackPane getStackPane() {
+        return stackPane;
     }
 
 
