@@ -47,18 +47,18 @@ import static com.example.invaders.controller.SpriteController.isGameOver;
 
 public class SpaceInvaderApp extends Application {
 
-     Scene scene;
+     static Scene scene;
     public static Pane root = new Pane();
     public static Pane exceptionPane = new Pane();
    public static  GamePlatform platform;
 
 
-    Logger logger = LogManager.getLogger(SpaceInvaderApp.class);
+    static Logger logger = LogManager.getLogger(SpaceInvaderApp.class);
     private static MediaPlayer backgroundMediaPlayer;
     public static Stage stage;
     private static boolean isPaused;
     private static AnimationTimer animationTimer;
-    Thread backgroundSoundThread;
+    static Thread backgroundSoundThread;
     static  boolean isSpawned=false;
 
     public static List<Sprite> sprites() {
@@ -95,7 +95,7 @@ public void stopGame(Stage window){
         stage = window;
         stage.close();
 }
-    public void startGame(Stage window,Player player,boolean MusicOff) {
+    public static void startGame(Stage window, Player player, boolean MusicOff) {
         playbackgroundSoundOff();
         stage = window;
         platform= new GamePlatform();
@@ -223,12 +223,7 @@ public void stopGame(Stage window){
                     });
                 });
 
-                executor.execute(() -> {
-                    Platform.runLater(() -> {
-                       workingPauseButton(addPauseButton(overlay));
 
-                    });
-                });
                 overlay.requestFocus();
             }
         };
@@ -262,7 +257,7 @@ public void stopGame(Stage window){
 
 
 
-    private Button addPauseButton(Pane overlay) {
+    private static Button addPauseButton(Pane overlay) {
         Image pauseIcon = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/PauseIcon.png"));
         Button pause = new Button();
         pause.setGraphic(new ImageView(pauseIcon));
@@ -273,7 +268,7 @@ public void stopGame(Stage window){
         pause.setFocusTraversable(true);
         return pause;
     }
-public void workingPauseButton(Button pause){
+public static void workingPauseButton(Button pause){
     Image playIcon = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/playIcon.png"));
     Stage pauseStage = new Stage();
     pauseStage.initOwner(stage);
@@ -303,7 +298,7 @@ public void workingPauseButton(Button pause){
 }
 
 
-    private void addLives(Pane overlay,int playerChances) {
+    private static void addLives(Pane overlay, int playerChances) {
         Image playerLife = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/shield.png"));
         double iconSpacing = 10.0;
         overlay.getChildren().removeIf(node -> node instanceof ImageView);

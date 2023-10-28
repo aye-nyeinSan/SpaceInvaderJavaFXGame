@@ -86,7 +86,7 @@ public class menuController {
         SpriteController.closeGameOverScreen();
         SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
         spaceInvaderApp.closeMainGameStage();
-        spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow(),player, isSoundOff);
+        SpriteController.RestartGame((Stage) ((Node) event.getSource()).getScene().getWindow(), player, isSoundOff);
 
     }
 

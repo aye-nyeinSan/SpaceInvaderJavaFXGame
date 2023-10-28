@@ -1,8 +1,10 @@
 package com.example.invaders.controller;
 
+import com.example.invaders.model.Player;
 import com.example.invaders.model.Sprite;
 import com.example.invaders.view.GamePlatform;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -14,6 +16,8 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.example.invaders.SpaceInvaderApp;
 
@@ -159,14 +163,14 @@ public class SpriteController {
             t = 0;
         }
     }
-    public static void RestartGame(Stage window ){
+    public static void RestartGame(Stage window , Player player, Boolean musicOff){
        if(window != null){
            window.close();
        }
-        SpaceInvaderApp spaceInvaderApp=new SpaceInvaderApp();
         RemoveEnemies();
+       SpaceInvaderApp.stopAnimation();
+        SpaceInvaderApp.startGame(window,player,musicOff);
 
-        spaceInvaderApp.startGame(window,player,true);
         isGameOver=false;
         player.setCurrentChance(1);
         player.setHealth(100);
