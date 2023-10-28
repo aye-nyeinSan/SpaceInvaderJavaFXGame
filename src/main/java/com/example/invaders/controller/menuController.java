@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import static com.example.invaders.SpaceInvaderApp.*;
+import static com.example.invaders.controller.playerController.getPlayer;
 import static com.example.invaders.controller.playerController.player;
 
 
@@ -22,6 +23,7 @@ public class menuController {
 
     @FXML
     ToggleButton soundBtn;
+    private static  Player selectedPlayer;
     private static boolean soundOff;
 
 //    @FXML
@@ -71,23 +73,21 @@ public class menuController {
         GamePlatform platform = new GamePlatform();
         ImageView clickedImageView = (ImageView) event.getSource();
         Image selectedImage = clickedImageView.getImage();
-        Player player = platform.addingPlayer(root,selectedImage);
+         selectedPlayer = platform.addingPlayer(root,selectedImage);
         System.out.println("Image selected");
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
-        spaceInvaderApp.startGame(stage, player,  isSoundOff);
+        spaceInvaderApp.startGame(stage, selectedPlayer,  isSoundOff);
 
     }
 
 @FXML
     public void onStartOver(ActionEvent event) throws Exception {
-    menuController menuController = new menuController();
-    boolean isSoundOff = menuController.soundOff;
+    boolean isSoundOff = soundOff;
         SpriteController.closeGameOverScreen();
         SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
         spaceInvaderApp.closeMainGameStage();
-        SpriteController.RestartGame((Stage) ((Node) event.getSource()).getScene().getWindow(), player, isSoundOff);
-
+        SpriteController.RestartGame((Stage) ((Node) event.getSource()).getScene().getWindow(),menuController.selectedPlayer, isSoundOff);
     }
 
     @FXML

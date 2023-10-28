@@ -5,10 +5,7 @@ import com.example.invaders.model.Boss;
 import com.example.invaders.model.Enemy;
 import com.example.invaders.model.Player;
 import javafx.animation.*;
-import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
@@ -62,8 +59,8 @@ public class GamePlatform {
     public static void BossSpawning(Pane pane) {
         Image bossImg = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/boss.png"));
         Boss boss = new Boss(240, (int) -bossImg.getHeight(), bossImg, "Boss"); // Set the initial Y position to be above the visible area
-        pane.getChildren().add(boss);
-        Duration duration = Duration.seconds(3);
+           pane.getChildren().add(boss);
+           Duration duration = Duration.seconds(3);
         int endY = 140;
         KeyValue keyValue = new KeyValue(boss.translateYProperty(), endY);
         KeyFrame keyFrame = new KeyFrame(duration, keyValue);

@@ -34,7 +34,7 @@ public  class Sprite extends ImageView {
     }
 
 
-    public boolean isDead() {
+    public boolean isDead(boolean b) {
 
         return dead;
     }

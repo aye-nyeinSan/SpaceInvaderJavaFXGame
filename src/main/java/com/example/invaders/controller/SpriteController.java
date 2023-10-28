@@ -1,5 +1,6 @@
 package com.example.invaders.controller;
 
+import com.example.invaders.model.Boss;
 import com.example.invaders.model.Player;
 import com.example.invaders.model.Sprite;
 import com.example.invaders.view.GamePlatform;
@@ -163,15 +164,16 @@ public class SpriteController {
             t = 0;
         }
     }
-    public static void RestartGame(Stage window , Player player, Boolean musicOff){
+    public static void RestartGame(Stage window,Player player, Boolean musicOff){
        if(window != null){
            window.close();
        }
-        RemoveEnemies();
-       SpaceInvaderApp.stopAnimation();
+        isGameOver=false;
+        root.getChildren().removeIf(node -> node instanceof Boss);
+        SpaceInvaderApp.stopAnimation();
+        playerController.respawn();
         SpaceInvaderApp.startGame(window,player,musicOff);
 
-        isGameOver=false;
         player.setCurrentChance(1);
         player.setHealth(100);
         player.setScore(0);
