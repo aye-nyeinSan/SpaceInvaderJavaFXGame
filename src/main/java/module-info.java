@@ -6,6 +6,7 @@ module com.example.invaders {
     requires javafx.media;
     requires javafx.graphics;
     requires javafx.base;
+    requires javafx.swing;
 
 
 

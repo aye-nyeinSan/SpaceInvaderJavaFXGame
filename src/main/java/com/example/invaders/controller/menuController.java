@@ -1,20 +1,28 @@
 package com.example.invaders.controller;
 
 import com.example.invaders.SpaceInvaderApp;
+import com.example.invaders.model.Player;
+import com.example.invaders.view.GamePlatform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.text.Text;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import static com.example.invaders.SpaceInvaderApp.*;
 import static com.example.invaders.controller.playerController.player;
 
 public class menuController {
     @FXML
     ToggleButton soundBtn;
+
+
     @FXML
     public void onNewGame(ActionEvent event){
         SpaceInvaderApp spaceInvaderApp=new SpaceInvaderApp();
@@ -22,11 +30,11 @@ public class menuController {
         System.out.println(isSoundOff);
         if (!isSoundOff) {
             // Start the new game with background music
-            spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow(),isSoundOff);
+            spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow(),player,isSoundOff);
         } else {
             // Start the new game without background music
             SpaceInvaderApp.playbackgroundSoundOff(); // Turn off background music
-            spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow(), isSoundOff);
+            spaceInvaderApp.startGame((Stage) ((Node) event.getSource()).getScene().getWindow(),player, isSoundOff);
         }
     }
 
@@ -49,10 +57,31 @@ public class menuController {
     @FXML
     public void onQuit(ActionEvent event){
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        // Close the stage
         stage.close();
     }
 
+
+@FXML
+    public void onHome(ActionEvent event) throws Exception {
+        SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
+        spaceInvaderApp.closeMainGameStage();
+        spaceInvaderApp.start((Stage) ((Node) event.getSource()).getScene().getWindow());
+
+    }
+    @FXML
+    public void addPlayer(MouseEvent event) throws Exception {
+        GamePlatform platform = new GamePlatform();
+        ImageView clickedImageView = (ImageView) event.getSource();
+        Image selectedImage = clickedImageView.getImage();
+        Player player = platform.addingPlayer(root,selectedImage);
+         System.out.println("Image selected");
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
+        spaceInvaderApp.startGame(stage, player,true);
+
+    }
+
+@FXML
     public void onQuitGameConsole(ActionEvent event){
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         SpaceInvaderApp app = new SpaceInvaderApp();
@@ -69,7 +98,7 @@ public class menuController {
             SpaceInvaderApp.playbackgroundSoundOn();}
 
     }
-
+@FXML
     public void onStartOver(ActionEvent event) {
         SpriteController.closeGameOverScreen();
         SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
@@ -78,12 +107,6 @@ public class menuController {
 
     }
 
-    public void onHome(ActionEvent event) throws Exception {
-        SpaceInvaderApp spaceInvaderApp = new SpaceInvaderApp();
-        spaceInvaderApp.closeMainGameStage();
-        spaceInvaderApp.start((Stage) ((Node) event.getSource()).getScene().getWindow());
-
-    }
     @FXML
     public void onChoosePlayer(ActionEvent event){
         try{

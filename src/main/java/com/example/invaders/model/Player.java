@@ -14,8 +14,8 @@ public class Player extends Sprite{
 
         super(x, y, image, type);
         health = 100;
-         chances=3;
-         currentChance=1;
+        chances=3;
+        currentChance=1;
         score = 0;
         width = image.getWidth();
     }

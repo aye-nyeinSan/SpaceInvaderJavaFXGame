@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: LightGreen;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.invaders.controller.menuController">
     <children>
-        <Label layoutX="63.0" text="Game Over" textFill="WHITE">
+        <Label layoutX="63.0" text="You Won" textFill="WHITE">
             <font>
                 <Font name="Niagara Engraved" size="48.0" />
             </font>

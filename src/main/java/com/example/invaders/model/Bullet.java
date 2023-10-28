@@ -12,9 +12,11 @@ public class Bullet extends Sprite{
     //enemy bullet images
     static Image enemyBullet=new Image(SpaceInvaderApp.class.getResourceAsStream("assets/fireball.png"));
 
+
     //player bullet images
     static Image normalBullet=new Image(SpaceInvaderApp.class.getResourceAsStream("assets/bullet.png"));
     static Image specialBullet=new Image(SpaceInvaderApp.class.getResourceAsStream("assets/bomb.png"));
+
 
     public Bullet(int x, int y, Image image, String type) {
         super(x, y, image, type);
@@ -54,4 +56,3 @@ public class Bullet extends Sprite{
 
 
 }
-

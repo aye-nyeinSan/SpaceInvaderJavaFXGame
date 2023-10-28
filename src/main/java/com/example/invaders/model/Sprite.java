@@ -46,5 +46,7 @@ public  class Sprite extends ImageView {
     public String getType() {
         return type;
     }
+
+
 }
 
