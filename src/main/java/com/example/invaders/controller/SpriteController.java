@@ -144,7 +144,7 @@ public class SpriteController {
                     break;
                 case "enemy":
 
-                    if (t > 3) {
+                    if (t > 2) {
                         if (Math.random() < 0.3) {
                             shoot(s);
                         }
@@ -184,7 +184,7 @@ public class SpriteController {
     private static void showGameOverScreen() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(SpriteController.class.getResource("/game-over.fxml"));
-            Scene gameOverMenuScene = new Scene(fxmlLoader.load(), 250, 250);
+            Scene gameOverMenuScene = new Scene(fxmlLoader.load(), 300, 250);
             gameOverStage = new Stage();
             gameOverStage.initStyle(StageStyle.UTILITY);
             gameOverStage.initModality(Modality.WINDOW_MODAL);
