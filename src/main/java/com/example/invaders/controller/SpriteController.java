@@ -168,8 +168,8 @@ public class SpriteController {
                     break;
                 case "enemy":
                      logger.debug("T value :{}",t);
-                    if (t > 3) {
-                        if (Math.random() < 0.1) {
+                    if (t > 2) {
+                        if (Math.random() < 0.2) {
                             shoot(s);
                         }
 
