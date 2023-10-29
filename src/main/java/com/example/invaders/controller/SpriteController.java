@@ -30,7 +30,7 @@ import static com.example.invaders.view.GamePlatform.boss;
 
 public class SpriteController {
     static double t = 0;
-    static  Stage gameOverStage,gameWinStage;
+    static Stage gameOverStage, gameWinStage;
     public static boolean isGameOver = false;
     static Logger logger = LogManager.getLogger(SpriteController.class);
 
@@ -82,9 +82,7 @@ public class SpriteController {
                                 logger.debug("After dead , Current life: " + player.getCurrentChance());
                             });
                             delay.play();
-                        }
-
-                        else if (player.getCurrentChance()==4) {
+                        } else if (player.getCurrentChance() == 4) {
                             player.setHealth(0);
                             Thread gameOverSoundThread = new Thread(() -> {
                                 SpaceInvaderApp.playEffectSound(new Media(SpaceInvaderApp.class.getResource("/sounds/gameover.m4a").toExternalForm()));
@@ -100,8 +98,7 @@ public class SpriteController {
 
                             //GameOverScreen
                             showGameOverScreen();
-                        }
-                       else if (player.getCurrentChance() >= 4) {
+                        } else if (player.getCurrentChance() >= 4) {
                             logger.error("player has already dead!");
                         }
                         showExplosion(player);
@@ -112,25 +109,26 @@ public class SpriteController {
                 case "playerbullet":
                     s.moveUp();
                     sprites().forEach(sprite -> {
-                        if(sprite.type.equals("enemy")) {
+                        if (sprite.type.equals("enemy")) {
                             if (s.getBoundsInParent().intersects(sprite.getBoundsInParent())) {
                                 sprite.dead = true;
                                 s.dead = true;
                                 sprite.setDead(true);
                                 int pointEarned = 5;
                                 player.increaseScore(pointEarned);
-                                System.out.println("Score:" + player.getScore());
+                                logger.debug("Score:", player.getScore());
                                 platform.getEnemies().remove(sprite);
                                 showExplosion(sprite);
                             }
                         } else if (sprite.type.equals("Boss")) {
-                            if(s.getBoundsInParent().intersects(sprite.getBoundsInParent())){
-                                sprite.dead=true;
-                                s.dead=true;
+                            if (s.getBoundsInParent().intersects(sprite.getBoundsInParent())) {
+                                sprite.dead = true;
+                                s.dead = true;
                                 sprite.setDead(true);
                                 platform.removeBoss(root);
+                                bossAnimationTimer.stop();
                                 player.increaseScore(100);
-                                logger.debug("Score:",player.getScore());
+                                logger.debug("Score:", player.getScore());
                                 showExplosion(sprite);
                                 showGameWinScreen();
                             }
@@ -142,25 +140,25 @@ public class SpriteController {
 
                     s.moveUp();
                     sprites().forEach(sprite -> {
-                        if(sprite.type.equals("enemy")) {
+                        if (sprite.type.equals("enemy")) {
                             if (s.getBoundsInParent().intersects(sprite.getBoundsInParent())) {
                                 sprite.dead = true;
                                 s.dead = true;
                                 sprite.setDead(true);
                                 int pointEarned = 10;
                                 player.increaseScore(pointEarned);
-                                logger.debug("Score:",player.getScore());
+                                logger.debug("Score:", player.getScore());
                                 platform.getEnemies().remove(sprite);
                                 showExplosion(sprite);
                             }
                         } else if (sprite.type.equals("Boss")) {
-                            if(s.getBoundsInParent().intersects(sprite.getBoundsInParent())){
-                                sprite.dead=true;
-                                s.dead=true;
+                            if (s.getBoundsInParent().intersects(sprite.getBoundsInParent())) {
+                                sprite.dead = true;
+                                s.dead = true;
                                 sprite.setDead(true);
                                 platform.removeBoss(root);
                                 player.increaseScore(10);
-                                logger.debug("Score:",player.getScore());
+                                logger.debug("Score:", player.getScore());
                                 showExplosion(sprite);
                                 showGameWinScreen();
                             }
@@ -169,15 +167,46 @@ public class SpriteController {
                     });
                     break;
                 case "enemy":
-
-                    if (t > 2) {
+                     logger.debug("T value :{}",t);
+                    if (t > 3) {
                         if (Math.random() < 0.1) {
                             shoot(s);
                         }
 
                     }
                     break;
+                case "Boss":
+                    if (t > 1.8) {
+                        if (Math.random() < 0.2) {
+                            shoot(s);
+                        }
 
+                    }
+                    break;
+                case "Bossbullet":
+                    if (t > 2) {
+                        if (Math.random() < 0.3) {
+                            shoot(s);
+                        }
+                    }
+
+                    shoot(s);
+                    s.moveDown();
+                    if (s.getBoundsInParent().intersects(player.getBoundsInParent())) {
+                        logger.error("Boss shot to player");
+                        Thread explosionSoundThread = new Thread(() -> {
+                            SpaceInvaderApp.playEffectSound(new Media(SpaceInvaderApp.class.getResource("/sounds/explosion.wav").toExternalForm()));
+
+                        });
+
+                        explosionSoundThread.start();
+                        player.dead = true;
+                        s.dead = true;
+                        player.setDead(true);
+                        s.setDead(true);
+                        isGameOver = true;
+                        showGameOverScreen();
+                    }
             }
         });
 
@@ -190,15 +219,16 @@ public class SpriteController {
             t = 0;
         }
     }
-    public static void RestartGame(Stage window,Player player, Boolean musicOff){
-       if(window != null){
-           window.close();
-       }
-        isGameOver=false;
+
+    public static void RestartGame(Stage window, Player player, Boolean musicOff) {
+        if (window != null) {
+            window.close();
+        }
+        isGameOver = false;
         root.getChildren().removeIf(node -> node instanceof Boss);
         SpaceInvaderApp.stopAnimation();
         playerController.respawn();
-        SpaceInvaderApp.startGame(window,player,musicOff);
+        SpaceInvaderApp.startGame(window, player, musicOff);
 
         player.setCurrentChance(1);
         player.setHealth(100);
@@ -207,6 +237,7 @@ public class SpriteController {
 
 
     }
+
     private static void showGameOverScreen() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(SpriteController.class.getResource("/game-over.fxml"));
@@ -227,29 +258,31 @@ public class SpriteController {
             e.printStackTrace();
         }
     }
+
     private static void showGameWinScreen() {
 
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(SpriteController.class.getResource("/game-win.fxml"));
-                Scene gameWinMenuScene = new Scene(fxmlLoader.load(), 250, 250);
-                gameWinStage = new Stage();
-                gameWinStage.initStyle(StageStyle.UTILITY);
-                gameWinStage.initModality(Modality.WINDOW_MODAL);
-                gameWinStage.setTitle("Game Win");
-                gameWinStage.setResizable(false);
-                gameWinStage.setScene(gameWinMenuScene);
-                SpaceInvaderApp.stopAnimation();
-                SpaceInvaderApp.playbackgroundSoundOff();
-                SpaceInvaderApp.playEffectSound(new Media(SpaceInvaderApp.class.getResource("/sounds/completion.wav").toExternalForm()));
-                gameWinStage.show();
-                gameWinStage.centerOnScreen();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(SpriteController.class.getResource("/game-win.fxml"));
+            Scene gameWinMenuScene = new Scene(fxmlLoader.load(), 250, 250);
+            gameWinStage = new Stage();
+            gameWinStage.initStyle(StageStyle.UTILITY);
+            gameWinStage.initModality(Modality.WINDOW_MODAL);
+            gameWinStage.setTitle("Game Win");
+            gameWinStage.setResizable(false);
+            gameWinStage.setScene(gameWinMenuScene);
+            SpaceInvaderApp.stopAnimation();
+            SpaceInvaderApp.playbackgroundSoundOff();
+            SpaceInvaderApp.playEffectSound(new Media(SpaceInvaderApp.class.getResource("/sounds/completion.wav").toExternalForm()));
+            gameWinStage.show();
+            gameWinStage.centerOnScreen();
 
-                Text scoreVar = (Text) gameWinMenuScene.lookup("#scoreVar");
-                scoreVar.setText(String.valueOf(player.getScore()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            Text scoreVar = (Text) gameWinMenuScene.lookup("#scoreVar");
+            scoreVar.setText(String.valueOf(player.getScore()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
     public static void closeGameOverScreen() {
         if (gameOverStage != null) {
             gameOverStage.close();

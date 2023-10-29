@@ -2,10 +2,8 @@ package com.example.invaders;
 
 import com.example.invaders.controller.SpriteController;
 import com.example.invaders.controller.enemyController;
-import com.example.invaders.controller.menuController;
 import com.example.invaders.controller.playerController;
 import com.example.invaders.exception.exceptionHandle;
-import com.example.invaders.model.Boss;
 import com.example.invaders.model.Enemy;
 import com.example.invaders.model.Player;
 import com.example.invaders.model.Sprite;
@@ -19,7 +17,6 @@ import javafx.application.Platform;
 
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,10 +24,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -47,8 +42,6 @@ import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 import static com.example.invaders.controller.SpriteController.isGameOver;
-import static com.example.invaders.controller.enemyController.*;
-import static com.example.invaders.view.GamePlatform.boss;
 
 
 public class SpaceInvaderApp extends Application {
@@ -57,16 +50,14 @@ public class SpaceInvaderApp extends Application {
     public static Pane root = new Pane();
     public static Pane exceptionPane = new Pane();
     public static GamePlatform platform;
-
-
     static Logger logger = LogManager.getLogger(SpaceInvaderApp.class);
     private static MediaPlayer backgroundMediaPlayer;
     public static Stage stage;
-    private static boolean isPaused;
     private static AnimationTimer animationTimer;
      public static AnimationTimer bossAnimationTimer;
     static Thread backgroundSoundThread;
     static boolean isSpawned = false;
+    static List<Enemy> enemies = new ArrayList<>();
 
     public static List<Sprite> sprites() {
         return root.getChildren().stream().map(n -> (Sprite) n).collect(Collectors.toList());
@@ -76,7 +67,6 @@ public class SpaceInvaderApp extends Application {
     @Override
     public void start(Stage window) throws Exception {
         stage = window;
-        stage.centerOnScreen();
         setMainMenuScreen(stage);
         stage.show();
 
@@ -122,7 +112,7 @@ public class SpaceInvaderApp extends Application {
         playbackgroundSoundOff();
         stage = window;
         platform = new GamePlatform();
-        System.out.println("MusicOff: " + MusicOff);//false
+        logger.info("MusicOff:{}",MusicOff);
 
         Region background = platform.addingBackgroundImage();
         // Check if there are existing enemies, and if so, remove them
@@ -135,7 +125,7 @@ public class SpaceInvaderApp extends Application {
             root.getChildren().removeAll(existingEnemies);
         }
 
-        List<Enemy> enemies = platform.addingEnemies(root);
+           enemies = platform.addingEnemies(root);
 
         if (MusicOff) {
             playbackgroundSoundOff();
@@ -381,6 +371,7 @@ public class SpaceInvaderApp extends Application {
     public static Stage getStage() {
         return stage;
     }
+
 
 
     public static void main(String[] args) {

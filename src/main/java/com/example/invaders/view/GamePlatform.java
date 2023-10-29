@@ -86,7 +86,7 @@ public class GamePlatform {
         Image bossImg = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/boss.png"));
         boss = new Boss(240, (int) -bossImg.getHeight(), bossImg, "Boss"); // Set the initial Y position to be above the visible area
         pane.getChildren().add(boss);
-        Duration duration = Duration.seconds(5);
+        Duration duration = Duration.seconds(3);
         int endY = 100;
         KeyValue keyValue = new KeyValue(boss.translateYProperty(), endY);
         KeyFrame keyFrame = new KeyFrame(duration, keyValue);

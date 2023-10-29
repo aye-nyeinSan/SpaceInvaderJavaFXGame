@@ -5,9 +5,9 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        enemyTestCase.class,
         playerTest.class,
-        enemyTest.class,
-        gameConditionTest.class
+        scoreTest.class
             })
 public class JUnitTestSuite {
 }

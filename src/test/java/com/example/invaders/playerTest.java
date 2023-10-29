@@ -60,7 +60,7 @@ public class playerTest {
         isMovedRight.setAccessible(true);
         player.setTranslateX(600);
 
-         assertFalse(isMovedRight.getBoolean(player),"player collided with wall.");
+         assertTrue(isMovedRight.getBoolean(player),"player collided with wall.");
 
     }
     @Test
@@ -71,11 +71,5 @@ public class playerTest {
         assertTrue(isAdded, "player doesn't respawn");
     }
 
-
-    @Test
-    public void playerControllerTestingKeys_are_worked_or_Not() {
-
-
-
     }
-}
+

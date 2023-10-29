@@ -23,13 +23,8 @@ import static com.example.invaders.view.GamePlatform.boss;
 
 
 public class enemyController {
-    private List<Enemy> enemies;
   static Logger logger = LogManager.getLogger(enemyController.class);
 
-    public enemyController(List<Enemy> enemies) {
-        this.enemies = enemies;
-
-    }
 
     public static void moveEnemies(List<Enemy> enemies) {
         int paneWidth = 600;
@@ -99,8 +94,6 @@ public class enemyController {
             bossAnimationTimer.stop();
         }
     }
-
-
 
 
 

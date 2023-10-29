@@ -30,8 +30,10 @@ public class Bullet extends Sprite{
         long currentTime = System.nanoTime();
         int xOffset = 20;
         int yOffset = 0; // Adjust this value for the Y offset if needed
-
-        if (who.type.equals("enemy")) {
+        if (who.type.equals("Boss")) {
+            Bullet bullet = new Bullet((int) who.getTranslateX() + xOffset, (int) who.getTranslateY() + yOffset, specialBullet,who.type +"bullet");
+            SpaceInvaderApp.getRoot().getChildren().addAll(bullet);
+        }else if (who.type.equals("enemy")) {
 
             Bullet bullet = new Bullet((int) who.getTranslateX() + xOffset, (int) who.getTranslateY() + yOffset, enemyBullet,who.type + "bullet");
             SpaceInvaderApp.getRoot().getChildren().addAll(bullet);
