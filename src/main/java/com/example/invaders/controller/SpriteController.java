@@ -122,7 +122,7 @@ public class SpriteController {
                             enemy.setDead(true);
                             int pointEarned = 5;
                             player.increaseScore(pointEarned);
-                            System.out.println("Score:" + player.getScore());
+                            logger.info("Score:{}",player.getScore());
                             platform.getEnemies().remove(enemy);
                             showExplosion(enemy);
 
@@ -144,7 +144,7 @@ public class SpriteController {
                     break;
                 case "enemy":
 
-                    if (t > 2) {
+                    if (t > 3) {
                         if (Math.random() < 0.3) {
                             shoot(s);
                         }

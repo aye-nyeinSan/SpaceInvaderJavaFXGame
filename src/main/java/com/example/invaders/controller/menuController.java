@@ -114,6 +114,20 @@ public class menuController {
         }
 
     }
+    @FXML
+    public void onHelp(ActionEvent event){
+        try{
+            FXMLLoader fxmlLoader=new FXMLLoader(SpriteController.class.getResource("/Help.fxml"));
+            Scene mainMenuScene = new Scene(fxmlLoader.load(), 600, 500);
+            Stage helpStage=new Stage();
+            helpStage.setTitle("Player");
+            helpStage.setScene(mainMenuScene);
+            helpStage.show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 

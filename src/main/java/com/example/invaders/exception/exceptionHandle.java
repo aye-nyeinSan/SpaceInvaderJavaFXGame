@@ -23,9 +23,9 @@ public class exceptionHandle  {
 
 
 
-    public void showTalkingDialog(String s, Player player, Pane exceptionpane, String direction) {
+    public void showTalkingDialog(String s, Player player, Pane exceptionpane, String direction,Duration duration) {
         Text dialogText = new Text(s);
-        dialogText.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 15));
+        dialogText.setFont(Font.font("Arial", FontWeight.BOLD, 15));
         dialogText.setFill(Color.BLACK);
         Image dialogBackgroundImage = null;
         if (direction.equals("right")) {
@@ -57,10 +57,10 @@ public class exceptionHandle  {
         dialogPane.setTranslateX(dialogX);
         dialogPane.setTranslateY(460);
 
-        // Add the dialogPane to the game scene (root)
         exceptionpane.getChildren().add(dialogPane);
 
-        PauseTransition dialogRemoval = new PauseTransition();
+
+        PauseTransition dialogRemoval = new PauseTransition(duration);
         dialogRemoval.setOnFinished(event -> {
             exceptionpane.getChildren().remove(dialogPane);
         });

@@ -1,6 +1,7 @@
 package com.example.invaders.view;
 
 import com.example.invaders.SpaceInvaderApp;
+import com.example.invaders.controller.enemyController;
 import com.example.invaders.model.Boss;
 import com.example.invaders.model.Enemy;
 import com.example.invaders.model.Player;
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class GamePlatform {
     ArrayList<Enemy> enemies  = new ArrayList<>();
+    public static Boss boss;
 
     public Region addingBackgroundImage() {
         // Add the background to the root pane
@@ -56,17 +58,20 @@ public class GamePlatform {
 
         return this.enemies;
     }
-    public static void BossSpawning(Pane pane) {
+    public static Timeline BossSpawning(Pane pane) {
         Image bossImg = new Image(SpaceInvaderApp.class.getResourceAsStream("assets/boss.png"));
-        Boss boss = new Boss(240, (int) -bossImg.getHeight(), bossImg, "Boss"); // Set the initial Y position to be above the visible area
+         boss = new Boss(240, (int) -bossImg.getHeight(), bossImg, "Boss"); // Set the initial Y position to be above the visible area
            pane.getChildren().add(boss);
-           Duration duration = Duration.seconds(3);
-        int endY = 140;
+           Duration duration = Duration.seconds(8);
+        int endY = 100;
         KeyValue keyValue = new KeyValue(boss.translateYProperty(), endY);
         KeyFrame keyFrame = new KeyFrame(duration, keyValue);
         Timeline timeline = new Timeline(keyFrame);
+
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
+
+        return timeline;
     }
 
 
@@ -74,7 +79,6 @@ public class GamePlatform {
     public List<Enemy> getEnemies() {
         return this.enemies;
     }
-
 
 
 }

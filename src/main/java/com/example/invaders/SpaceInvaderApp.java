@@ -12,6 +12,7 @@ import com.example.invaders.model.Sprite;
 import com.example.invaders.view.GamePlatform;
 import javafx.animation.AnimationTimer;
 
+import javafx.animation.Timeline;
 import javafx.application.Application;
 
 import javafx.application.Platform;
@@ -36,6 +37,7 @@ import javafx.stage.Stage;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,6 +47,8 @@ import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 import static com.example.invaders.controller.SpriteController.isGameOver;
+import static com.example.invaders.controller.enemyController.*;
+import static com.example.invaders.view.GamePlatform.boss;
 
 
 public class SpaceInvaderApp extends Application {
@@ -60,6 +64,7 @@ public class SpaceInvaderApp extends Application {
     public static Stage stage;
     private static boolean isPaused;
     private static AnimationTimer animationTimer;
+    private static AnimationTimer bossAnimationTimer;
     static Thread backgroundSoundThread;
     static boolean isSpawned = false;
 
@@ -109,6 +114,11 @@ public class SpaceInvaderApp extends Application {
     }
 
     public static void startGame(Stage window, Player player, boolean MusicOff) {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         playbackgroundSoundOff();
         stage = window;
         platform = new GamePlatform();
@@ -140,7 +150,6 @@ public class SpaceInvaderApp extends Application {
 
 
         playerController playerController = new playerController(player);
-        enemyController enemyController = new enemyController(enemies);
 
         Pane overlay = new Pane();
         VBox scoreBoard = new VBox();
@@ -194,29 +203,40 @@ public class SpaceInvaderApp extends Application {
 
 
                 default:
-                    exception.showTalkingDialog("You clicked \n another key: \n" + e.getCode(), player, exceptionPane, "default");
+                    exception.showTalkingDialog("You clicked \n another key: \n" + e.getCode(), player, exceptionPane, "default", Duration.millis(800));
             }
 
         });
+
         animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 ExecutorService executor = Executors.newFixedThreadPool(4);
                 SpriteController.update();
-                if (!isSpawned && platform.getEnemies().size() <= 10) {
-                    playbackgroundSound(new Media(SpaceInvaderApp.class.getResource("/sounds/BossComing.mp3").toExternalForm()));
-                    GamePlatform.BossSpawning(root);
-                    isSpawned = true;
+                enemyController.moveEnemies(enemies);
+                scoreLabel.setText("Score: " + player.getScore());
+                if (!isSpawned && platform.getEnemies().size()<=0) {
+                    playEffectSound(new Media(SpaceInvaderApp.class.getResource("/sounds/BossComing.mp3").toExternalForm()));
+                        exception.showTalkingDialog("Boss is coming!!", player, exceptionPane, "default", Duration.millis(5000));
+                       Timeline timeLine = GamePlatform.BossSpawning(root);
+                         isSpawned = true;
+                    timeLine.setOnFinished((event)->{
+                        executor.execute(() -> {
+                            Platform.runLater(() -> {
+                                bossAnimationTimer.start();
+                            });
+                        });
 
+                    });
                 }
 
-                enemyController.moveEnemies(enemies);
+
                 executor.execute(() -> {
                     Platform.runLater(() -> {
                         playerController.checkCollision();
                     });
                 });
-                scoreLabel.setText("Score: " + player.getScore());
+
 
 
                 executor.execute(() -> {
@@ -239,6 +259,13 @@ public class SpaceInvaderApp extends Application {
                 overlay.requestFocus();
             }
         };
+        bossAnimationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                enemyController.moveBoss();
+            }
+        };
+
 
 
         logger.debug("Animation is working!");

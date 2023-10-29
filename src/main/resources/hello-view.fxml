@@ -30,7 +30,7 @@
             <Font name="Agency FB Bold" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="239.0" layoutY="301.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="122.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Help">
+      <Button layoutX="239.0" layoutY="301.0" mnemonicParsing="false" onAction="#onHelp" prefHeight="38.0" prefWidth="122.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Help">
          <font>
             <Font name="Agency FB Bold" size="18.0" />
          </font>

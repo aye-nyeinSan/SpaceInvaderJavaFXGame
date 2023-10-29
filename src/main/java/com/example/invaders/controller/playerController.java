@@ -11,6 +11,7 @@ import java.util.TimerTask;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -63,13 +64,13 @@ public class playerController {
 
         if (player.getTranslateX() >= 560) {
             player.setTranslateX(560);
-            exception.showTalkingDialog("I've hit \n the right wall",player,exceptionPane,"right" );
+            exception.showTalkingDialog("I've hit \n the right wall",player,exceptionPane,"right", Duration.millis(600));
             logger.debug("Dialog textbox is shown");
             isMoveRight=false;
           return false;
         } else if (player.getTranslateX() <= 0) {
             player.setTranslateX(0);
-            exception.showTalkingDialog("I've hit \n the left wall",player,exceptionPane,"left" );
+            exception.showTalkingDialog("I've hit \n the left wall",player,exceptionPane,"left", Duration.millis(600));
             logger.debug("Dialog textbox is shown");
             isMoveLeft = false;
             return false;
