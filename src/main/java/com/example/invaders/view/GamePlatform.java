@@ -1,7 +1,6 @@
 package com.example.invaders.view;
 
 import com.example.invaders.SpaceInvaderApp;
-import com.example.invaders.controller.enemyController;
 import com.example.invaders.model.Boss;
 import com.example.invaders.model.Enemy;
 import com.example.invaders.model.Player;
@@ -105,4 +104,12 @@ public class GamePlatform {
     }
 
 
+
+        public void removeBoss(Pane root){
+                boss.setDead(true);
+                root.getChildren().remove(boss);
+
+
+
+    }
 }

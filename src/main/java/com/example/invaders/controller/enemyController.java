@@ -16,6 +16,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.example.invaders.SpaceInvaderApp.bossAnimationTimer;
 import static com.example.invaders.controller.playerController.player;
 import static com.example.invaders.view.GamePlatform.boss;
 
@@ -92,7 +94,12 @@ public class enemyController {
         if(boss.getTranslateX() >= paneWidth - boss.getFitWidth()){
             boss.setTranslateX(0);
         }
+        if (boss.dead) {
+            logger.info("Boss is dead!");
+            bossAnimationTimer.stop();
+        }
     }
+
 
 
 

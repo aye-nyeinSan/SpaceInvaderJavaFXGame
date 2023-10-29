@@ -7,8 +7,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: darkred;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.invaders.controller.menuController">
+<AnchorPane prefHeight="250.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.invaders.controller.menuController">
     <children>
+      <ImageView fitHeight="274.0" fitWidth="284.0" layoutX="-14.0" layoutY="-22.0">
+         <image>
+            <Image url="@com/example/invaders/assets/winspace.jpg" />
+         </image>
+      </ImageView>
         <Button layoutX="34.0" layoutY="142.0" mnemonicParsing="false" onAction="#onStartOver" text="Start Over">
             <font>
                 <Font name="Agency FB" size="18.0" />
@@ -21,7 +26,7 @@
         </Button>
         <Text fill="WHITE" layoutX="82.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
             <font>
-                <Font name="Agency FB" size="24.0" />
+                <Font name="Agency FB Bold" size="24.0" />
             </font>
         </Text>
         <Text fx:id="scoreVar" fill="WHITE" layoutX="144.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0">
@@ -34,11 +39,6 @@
                 <Font name="Agency FB" size="18.0" />
             </font>
         </Button>
-        <ImageView fitHeight="253.0" fitWidth="250.0" layoutX="-3.0">
-            <image>
-                <Image url="@com/example/invaders/assets/6SSp.gif" />
-            </image>
-        </ImageView>
         <ImageView fitHeight="143.0" fitWidth="157.0" layoutX="46.0" layoutY="-18.0">
             <image>
                 <Image url="@com/example/invaders/assets/win-removebg-preview.png" />

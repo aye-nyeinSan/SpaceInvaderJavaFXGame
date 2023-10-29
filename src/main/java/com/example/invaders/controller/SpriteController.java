@@ -3,9 +3,7 @@ package com.example.invaders.controller;
 import com.example.invaders.model.Boss;
 import com.example.invaders.model.Player;
 import com.example.invaders.model.Sprite;
-import com.example.invaders.view.GamePlatform;
 import javafx.animation.*;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -17,8 +15,6 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import com.example.invaders.SpaceInvaderApp;
 
@@ -30,10 +26,11 @@ import org.apache.logging.log4j.Logger;
 import static com.example.invaders.SpaceInvaderApp.*;
 import static com.example.invaders.controller.playerController.*;
 import static com.example.invaders.model.Bullet.shoot;
+import static com.example.invaders.view.GamePlatform.boss;
 
 public class SpriteController {
     static double t = 0;
-   static  Stage gameOverStage;
+    static  Stage gameOverStage,gameWinStage;
     public static boolean isGameOver = false;
     static Logger logger = LogManager.getLogger(SpriteController.class);
 
@@ -114,38 +111,67 @@ public class SpriteController {
                     break;
                 case "playerbullet":
                     s.moveUp();
-                    sprites().stream().filter(e -> e.type.equals("enemy")).forEach(enemy -> {
-                        if (s.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
-
-                            enemy.dead = true;
-                            s.dead = true;
-                            enemy.setDead(true);
-                            int pointEarned = 5;
-                            player.increaseScore(pointEarned);
-                            logger.info("Score:{}",player.getScore());
-                            platform.getEnemies().remove(enemy);
-                            showExplosion(enemy);
+                    sprites().forEach(sprite -> {
+                        if(sprite.type.equals("enemy")) {
+                            if (s.getBoundsInParent().intersects(sprite.getBoundsInParent())) {
+                                sprite.dead = true;
+                                s.dead = true;
+                                sprite.setDead(true);
+                                int pointEarned = 5;
+                                player.increaseScore(pointEarned);
+                                System.out.println("Score:" + player.getScore());
+                                platform.getEnemies().remove(sprite);
+                                showExplosion(sprite);
+                            }
+                        } else if (sprite.type.equals("Boss")) {
+                            if(s.getBoundsInParent().intersects(sprite.getBoundsInParent())){
+                                sprite.dead=true;
+                                s.dead=true;
+                                sprite.setDead(true);
+                                platform.removeBoss(root);
+                                player.increaseScore(100);
+                                logger.debug("Score:",player.getScore());
+                                showExplosion(sprite);
+                                showGameWinScreen();
+                            }
 
                         }
                     });
                     break;
                 case "playerspecialBullet":
+
                     s.moveUp();
-                    sprites().stream().filter(e -> e.type.equals("enemy")).forEach(enemy -> {
-                        if (s.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
-                            enemy.dead = true;
-                            s.dead = true;
-                            platform.getEnemies().remove(enemy);
-                            int pointEarned = 10;
-                            player.increaseScore(pointEarned);
-                            System.out.println("Score:" + player.getScore());
+                    sprites().forEach(sprite -> {
+                        if(sprite.type.equals("enemy")) {
+                            if (s.getBoundsInParent().intersects(sprite.getBoundsInParent())) {
+                                sprite.dead = true;
+                                s.dead = true;
+                                sprite.setDead(true);
+                                int pointEarned = 10;
+                                player.increaseScore(pointEarned);
+                                logger.debug("Score:",player.getScore());
+                                platform.getEnemies().remove(sprite);
+                                showExplosion(sprite);
+                            }
+                        } else if (sprite.type.equals("Boss")) {
+                            if(s.getBoundsInParent().intersects(sprite.getBoundsInParent())){
+                                sprite.dead=true;
+                                s.dead=true;
+                                sprite.setDead(true);
+                                platform.removeBoss(root);
+                                player.increaseScore(10);
+                                logger.debug("Score:",player.getScore());
+                                showExplosion(sprite);
+                                showGameWinScreen();
+                            }
+
                         }
                     });
                     break;
                 case "enemy":
 
-                    if (t > 2) {
-                        if (Math.random() < 0.3) {
+                    if (t > 3) {
+                        if (Math.random() < 0.1) {
                             shoot(s);
                         }
 
@@ -200,6 +226,28 @@ public class SpriteController {
             e.printStackTrace();
         }
     }
+    private static void showGameWinScreen() {
+
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(SpriteController.class.getResource("/game-win.fxml"));
+                Scene gameWinMenuScene = new Scene(fxmlLoader.load(), 250, 250);
+                gameWinStage = new Stage();
+                gameWinStage.initStyle(StageStyle.UTILITY);
+                gameWinStage.initModality(Modality.WINDOW_MODAL);
+                gameWinStage.setTitle("Game Win");
+                gameWinStage.setResizable(false);
+                gameWinStage.setScene(gameWinMenuScene);
+                SpaceInvaderApp.stopAnimation();
+                SpaceInvaderApp.playbackgroundSoundOff();
+                SpaceInvaderApp.playEffectSound(new Media(SpaceInvaderApp.class.getResource("/sounds/completion.wav").toExternalForm()));
+                gameWinStage.show();
+
+                Text scoreVar = (Text) gameWinMenuScene.lookup("#scoreVar");
+                scoreVar.setText(String.valueOf(player.getScore()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }
     public static void closeGameOverScreen() {
         if (gameOverStage != null) {
             gameOverStage.close();
@@ -215,7 +263,7 @@ public class SpriteController {
         explosion.setTranslateY(target.getTranslateY() - 50);
         root.getChildren().add(explosion);
 
-        int explosionDuration = 500; // Adjust the duration as needed
+        int explosionDuration = 500;
 
         Timeline timeline = new Timeline(
                 new KeyFrame(
@@ -224,7 +272,7 @@ public class SpriteController {
                 )
         );
 
-        timeline.setCycleCount(1); // Play the animation once
+        timeline.setCycleCount(1);
         timeline.play();
     }
 

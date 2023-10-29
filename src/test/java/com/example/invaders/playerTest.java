@@ -66,7 +66,7 @@ public class playerTest {
     @Test
     public void playerRespawnAgainAfterDead(){
             root.getChildren().remove(player);
-            player.isDead(true);
+           player.setDead(true);
           boolean isAdded= root.getChildren().add(player);
         assertTrue(isAdded, "player doesn't respawn");
     }

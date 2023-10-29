@@ -39,7 +39,7 @@
             <Font name="Agency FB" size="24.0" />
          </font>
       </Text>
-      <Text fill="#00ff90" layoutX="50.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Over" wrappingWidth="239.1328125">
+      <Text fill="#00ff90" layoutX="41.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Over" wrappingWidth="239.1328125">
          <font>
             <Font name="Britannic Bold" size="48.0" />
          </font>

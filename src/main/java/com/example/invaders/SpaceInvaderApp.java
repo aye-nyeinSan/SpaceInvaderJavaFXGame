@@ -64,7 +64,7 @@ public class SpaceInvaderApp extends Application {
     public static Stage stage;
     private static boolean isPaused;
     private static AnimationTimer animationTimer;
-    private static AnimationTimer bossAnimationTimer;
+     public static AnimationTimer bossAnimationTimer;
     static Thread backgroundSoundThread;
     static boolean isSpawned = false;
 
@@ -220,25 +220,22 @@ public class SpaceInvaderApp extends Application {
                         exception.showTalkingDialog("Boss is coming!!", player, exceptionPane, "default", Duration.millis(5000));
                        Timeline timeLine = GamePlatform.BossSpawning(root);
                          isSpawned = true;
-                    timeLine.setOnFinished((event)->{
+                    timeLine.setOnFinished((event) -> {
                         executor.execute(() -> {
                             Platform.runLater(() -> {
                                 bossAnimationTimer.start();
+
                             });
                         });
-
                     });
+
+
                 }
-
-
                 executor.execute(() -> {
                     Platform.runLater(() -> {
                         playerController.checkCollision();
                     });
                 });
-
-
-
                 executor.execute(() -> {
                     Platform.runLater(() -> {
                         scoreLabel.setText("Score: " + player.getScore());
