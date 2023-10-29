@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 
 import static com.example.invaders.SpaceInvaderApp.root;
-import static com.example.invaders.SpaceInvaderApp.stackPane;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

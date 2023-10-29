@@ -6,7 +6,7 @@ public class enemyTest {
     @Test
     public void enemiesCollidedWithWallAndReappearAgain(){}
     @Test
-    public void BossComingWhen3EnemiesLeft(){
+    public void BossComingWhen5EnemiesLeft(){
 
     }
 

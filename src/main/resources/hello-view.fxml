@@ -9,49 +9,36 @@
 <?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="619.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.invaders.controller.menuController">
-   <children>
-      <ImageView fitHeight="523.0" fitWidth="619.0">
-         <image>
-            <Image url="https://media.giphy.com/media/3ov9jPghXAsbvLmcjm/giphy.gif" />
-         </image>
-      </ImageView>
-      <Text fill="#90df30" fontSmoothingType="LCD" layoutX="115.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Space Invader" textAlignment="CENTER">
-         <font>
-            <Font name="Bernard MT Condensed" size="72.0" />
-         </font>
-      </Text>
-      <Button fx:id="newbtn" layoutX="248.0" layoutY="156.0" mnemonicParsing="false" onAction="#onNewGame" prefHeight="39.0" prefWidth="104.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="New Game">
-         <font>
-            <Font name="Agency FB Bold" size="20.0" />
-         </font>
-      </Button>
-<<<<<<< HEAD
-      <Button layoutX="239.0" layoutY="214.0" mnemonicParsing="false" onAction="#onChoosePlayer" prefHeight="34.0" prefWidth="122.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Choose Player">
-=======
-      <Button onAction="#onChoosePlayer"  layoutX="239.0" layoutY="214.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="122.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Choose Player">
->>>>>>> master
-         <font>
-            <Font name="Agency FB Bold" size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="quitBtn" layoutX="248.0" layoutY="379.0" mnemonicParsing="false" onAction="#onQuit" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Quit">
-         <font>
-            <Font name="Agency FB Bold" size="18.0" />
-         </font>
-      </Button>
-<<<<<<< HEAD
-      <Button layoutX="248.0" layoutY="320.0" mnemonicParsing="false" onAction="#onHelp" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Help">
-=======
-      <Button layoutX="248.0" layoutY="320.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Help">
->>>>>>> master
-         <font>
-            <Font name="Agency FB Bold" size="18.0" />
-         </font>
-      </Button>
-      <ToggleButton fx:id="soundBtn" layoutX="239.0" layoutY="269.0" mnemonicParsing="false" onAction="#onSoundOff" prefHeight="38.0" prefWidth="122.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Music Off🔇">
-         <font>
-            <Font name="Agency FB Bold" size="18.0" />
-         </font>
-      </ToggleButton>
-   </children>
+    <children>
+        <ImageView fitHeight="523.0" fitWidth="619.0">
+            <image>
+                <Image url="https://media.giphy.com/media/3ov9jPghXAsbvLmcjm/giphy.gif" />
+            </image>
+        </ImageView>
+        <Text fill="#90df30" fontSmoothingType="LCD" layoutX="115.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Space Invader" textAlignment="CENTER">
+            <font>
+                <Font name="Bernard MT Condensed" size="72.0" />
+            </font>
+        </Text>
+        <Button layoutX="239.0" layoutY="189.0" mnemonicParsing="false" onAction="#onChoosePlayer" prefHeight="34.0" prefWidth="122.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="New Game">
+            <font>
+                <Font name="Agency FB Bold" size="22.0" />
+            </font>
+        </Button>
+        <Button fx:id="quitBtn" layoutX="239.0" layoutY="356.0" mnemonicParsing="false" onAction="#onQuit" prefHeight="38.0" prefWidth="122.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Quit">
+            <font>
+                <Font name="Agency FB Bold" size="18.0" />
+            </font>
+        </Button>
+        <Button layoutX="239.0" layoutY="301.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="122.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Help">
+            <font>
+                <Font name="Agency FB Bold" size="18.0" />
+            </font>
+        </Button>
+        <ToggleButton fx:id="soundBtn" layoutX="239.0" layoutY="251.0" mnemonicParsing="false" onAction="#onSoundOff" prefHeight="38.0" prefWidth="122.0" style="-fx-background-color: lightgreen; -fx-border-color: black; -fx-border-width: 2;" text="Music Off🔇">
+            <font>
+                <Font name="Agency FB Bold" size="18.0" />
+            </font>
+        </ToggleButton>
+    </children>
 </Pane>

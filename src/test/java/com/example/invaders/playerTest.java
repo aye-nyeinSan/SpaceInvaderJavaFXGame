@@ -14,6 +14,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import static com.example.invaders.SpaceInvaderApp.root;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -63,11 +64,17 @@ public class playerTest {
 
     }
     @Test
-    public void playerRespawnAgainAfterDead(){}
+    public void playerRespawnAgainAfterDead(){
+            root.getChildren().remove(player);
+            player.isDead(true);
+          boolean isAdded= root.getChildren().add(player);
+        assertTrue(isAdded, "player doesn't respawn");
+    }
 
 
     @Test
     public void playerControllerTestingKeys_are_worked_or_Not() {
+
 
 
     }

@@ -1,8 +1,11 @@
 package com.example.invaders.controller;
 
+import com.example.invaders.model.Boss;
+import com.example.invaders.model.Player;
 import com.example.invaders.model.Sprite;
 import com.example.invaders.view.GamePlatform;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -15,6 +18,8 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.example.invaders.SpaceInvaderApp;
 
@@ -135,21 +140,51 @@ public class SpriteController {
                     });
                     break;
                 case "playerspecialBullet":
+//                    s.moveUp();
+//                    sprites().stream().filter(e -> e.type.equals("enemy")).forEach(enemy -> {
+//                        if (s.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
+//                            enemy.dead = true;
+//                            s.dead = true;
+//                            platform.getEnemies().remove(enemy);
+//                            int pointEarned = 10;
+//                            player.increaseScore(pointEarned);
+//                            System.out.println("Score:" + player.getScore());
+//                            showExplosion(enemy);
+//                        }
+//                    });
+//                    break;
+
                     s.moveUp();
-                    sprites().stream().filter(e -> e.type.equals("enemy")).forEach(enemy -> {
-                        if (s.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
-                            enemy.dead = true;
-                            s.dead = true;
-                            platform.getEnemies().remove(enemy);
-                            int pointEarned = 10;
-                            player.increaseScore(pointEarned);
-                            System.out.println("Score:" + player.getScore());
+                    sprites().forEach(sprite -> {
+                        if(sprite.type.equals("enemy")) {
+                            if (s.getBoundsInParent().intersects(sprite.getBoundsInParent())) {
+                                sprite.dead = true;
+                                s.dead = true;
+                                sprite.setDead(true);
+                                int pointEarned = 10;
+                                player.increaseScore(pointEarned);
+                                System.out.println("Score:" + player.getScore());
+                                platform.getEnemies().remove(sprite);
+                                showExplosion(sprite);
+                            }
+                        } else if (sprite.type.equals("Boss")) {
+                            if(s.getBoundsInParent().intersects(sprite.getBoundsInParent())){
+                                sprite.dead=true;
+                                s.dead=true;
+                                sprite.setDead(true);
+                                platform.removeBoss();
+                                player.increaseScore(10);
+                                System.out.println("Score:"+player.getScore());
+                                showExplosion(sprite);
+                                showGameWinScreen();
+                            }
+
                         }
                     });
                     break;
                 case "enemy":
 
-                    if (t > 2) {
+                    if (t > 2) { //t>2
                         if (Math.random() < 0.3) {
                             shoot(s);
                         }
@@ -169,15 +204,17 @@ public class SpriteController {
             t = 0;
         }
     }
-    public static void RestartGame(Stage window ,Boolean isSoundOff ){
-        if(window != null){
-            window.close();
-        }
-        SpaceInvaderApp spaceInvaderApp=new SpaceInvaderApp();
-        RemoveEnemies();
 
-        spaceInvaderApp.startGame(window,player,isSoundOff);
+    public static void RestartGame(Stage window,Player player, Boolean musicOff){
+       if(window != null) {
+           window.close();
+       }
         isGameOver=false;
+        root.getChildren().removeIf(node -> node instanceof Boss);
+        SpaceInvaderApp.stopAnimation();
+        playerController.respawn();
+        SpaceInvaderApp.startGame(window,player,musicOff);
+
         player.setCurrentChance(1);
         player.setHealth(100);
         player.setScore(0);
