@@ -170,7 +170,7 @@ public class SpriteController {
                     break;
                 case "enemy":
 
-                    if (t > 3) {
+                    if (t > 2) {
                         if (Math.random() < 0.1) {
                             shoot(s);
                         }
@@ -218,6 +218,7 @@ public class SpriteController {
             gameOverStage.setResizable(false);
             gameOverStage.setScene(gameOverMenuScene);
             gameOverStage.show();
+            gameOverStage.centerOnScreen();
             SpaceInvaderApp.stopAnimation();
 
             Text scoreVar = (Text) gameOverMenuScene.lookup("#scoreVar");
@@ -241,6 +242,7 @@ public class SpriteController {
                 SpaceInvaderApp.playbackgroundSoundOff();
                 SpaceInvaderApp.playEffectSound(new Media(SpaceInvaderApp.class.getResource("/sounds/completion.wav").toExternalForm()));
                 gameWinStage.show();
+                gameWinStage.centerOnScreen();
 
                 Text scoreVar = (Text) gameWinMenuScene.lookup("#scoreVar");
                 scoreVar.setText(String.valueOf(player.getScore()));
